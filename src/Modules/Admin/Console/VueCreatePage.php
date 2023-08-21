@@ -222,7 +222,7 @@ class VueCreatePage extends Command
         }
         if($foundItem) return;
         $arrayConfig["menu"][] = [
-            "name" => $module,
+            "name" => $route,
             'route' => $route
         ];
         $jsonData = $this->arrayToConfigString($arrayConfig);
