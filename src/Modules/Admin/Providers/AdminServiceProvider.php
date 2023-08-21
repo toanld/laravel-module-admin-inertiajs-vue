@@ -37,7 +37,6 @@ class AdminServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,
-                InstallFirst::class,
                 GenerateDatabase::class,
                 CreateUser::class
             ]);

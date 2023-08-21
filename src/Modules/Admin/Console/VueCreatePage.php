@@ -15,7 +15,7 @@ class VueCreatePage extends Command
      *
      * @var string
      */
-    protected $name = 'make:page';
+    protected $name = 'make:admin-page';
     protected $module = null;
 
     /**
