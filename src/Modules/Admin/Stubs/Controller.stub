@@ -1,0 +1,76 @@
+<?php
+
+namespace Modules\$MODULE$\Http\Controllers$PATH_FOLDER$;
+
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
+use Modules\$MODULE$\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Modules\$MODULE$\Entities\$MODEL_NAME$ as ModelName;
+
+class $CONTROLLER$ extends Controller
+{
+    public function __construct()
+    {
+        Inertia::share('routeName', "$ROUTER_NAME$");
+    }
+
+    public function index()
+    {
+        return Inertia::module('$MODULE_LOWER$::$FOLDER_VUE$/Index', [
+            'filters' => Request::all('search', 'trashed'),
+            'listings' => ModelName::paginate(10),
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::module('$MODULE_LOWER$::$FOLDER_VUE$/Create');
+    }
+
+    public function store()
+    {
+        $validate = Request::validate([
+            'name' => ['required', 'max:255']
+        ]);
+        $slug = Str::slug($validate['name']);
+        $md5 = md5($slug);
+        $model = new ModelName();
+        $model->name = $validate['name'];
+        $model->slug = $slug;
+        $model->md5 = $md5;
+        $model->save();
+
+        return Redirect::route('$ROUTER_NAME$')->with('success', 'Contact created.');
+    }
+
+    public function edit( ModelName $model)
+    {
+        return Inertia::module('$MODULE_LOWER$::$FOLDER_VUE$/Edit', [
+            'model' => $model
+        ]);
+    }
+
+    public function update( ModelName $model)
+    {
+        $validate = Request::validate([
+            'name' => ['required', 'max:255']
+        ]);
+        $model->name = $validate['name'];
+        $model->save();
+        return Redirect::route('$ROUTER_NAME$')->with('success', 'Data updated.');
+    }
+
+    public function destroy(ModelName $model)
+    {
+        $model->delete();
+        return Redirect::route('$ROUTER_NAME$')->with('success', 'Data deleted.');
+    }
+
+    public function restore(ModelName $model)
+    {
+        $model->restore();
+        return Redirect::back()->with('success', 'Data restored.');
+    }
+}

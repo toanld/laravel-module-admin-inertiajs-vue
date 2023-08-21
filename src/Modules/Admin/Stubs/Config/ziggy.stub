@@ -1,0 +1,6 @@
+<?php
+
+return [
+    'url' => '',
+    // Các cấu hình Ziggy khác...
+];

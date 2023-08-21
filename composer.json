@@ -1,0 +1,22 @@
+{
+    "name": "toanld/laravel-module-admin-inertiajs-vue",
+    "description": "Help you find out which file the query is in in the code.",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Toanld\\LaravelModuleAdminInertiajsVue\\LaravelModuleAdminInertiajsVueServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Toanld\\LaravelModuleAdminInertiajsVue\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "toanld",
+            "email": "toanld1905@gmail.com"
+        }
+    ]
+}

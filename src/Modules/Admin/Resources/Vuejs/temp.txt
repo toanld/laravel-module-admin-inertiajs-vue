@@ -1,0 +1,45 @@
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        // Lấy CSRF token từ meta tag của Laravel
+        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        // Cấu hình TinyMCE để thêm CSRF token vào mỗi yêu cầu HTTP
+        tinymce.init({
+            // Các cài đặt khác của TinyMCE...
+            images_upload_url: '/your-upload-url',
+            images_upload_handler: function (blobInfo, success, failure) {
+                const xhr, formData;
+
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+                xhr.open('POST', this.images_upload_url);
+
+                // Gửi CSRF token trong header của yêu cầu
+                xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+
+                xhr.onload = function() {
+                    let json;
+
+                    if (xhr.status !== 200) {
+                        failure('HTTP Error: ' + xhr.status);
+                        return;
+                    }
+
+                    json = JSON.parse(xhr.responseText);
+
+                    if (!json || typeof json.location !== 'string') {
+                        failure('Invalid JSON: ' + xhr.responseText);
+                        return;
+                    }
+
+                    success(json.location);
+                };
+
+                formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                xhr.send(formData);
+            }
+        });
+    });
+</script>
