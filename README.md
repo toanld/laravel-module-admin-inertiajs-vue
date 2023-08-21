@@ -3,20 +3,24 @@
 Require this package with composer. It is recommended to only require the package for development.
 
 ```shell
-composer require toanld/laravel-module-inertiajs-vue
+composer require toanld/laravel-module-admin-inertiajs-vue
 ```
 
-### Syntax
+### Cài đặt module theo các bước
 
-```php
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-use Toanld\DebugToSql\DebugToSQL;
-
-class Test extends Model
-{
-    use DebugToSQL;
-}
+```shell
+php artisan install:admin
 ```
+
+### Tạo user đăng nhập admin
+
+```shell
+php artisan admin:create-user
+```
+
+### Tạo page trong admin
+```shell
+php artisan make:admin-page
+```
+
 
