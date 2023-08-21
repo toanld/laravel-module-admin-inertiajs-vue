@@ -11,6 +11,14 @@ composer require toanld/laravel-module-admin-inertiajs-vue
 ```shell
 php artisan install:admin
 ```
+### Tạo database
+```shell
+php artisan migrate
+```
+### sửa .env 
+```shell
+APP_URL=http://127.0.0.1
+```
 
 ### Tạo user đăng nhập admin
 
