@@ -42,7 +42,7 @@ class VueCreatePage extends Command
      */
     public function handle()
     {
-        $modules = array_keys(myapp()->getModules());
+        $modules = array_keys(mymodule()->getModules());
         $module = $this->choice("Chọn module cần tạo page", $modules,0);
         $this->module = $module;
         $typepages = [
