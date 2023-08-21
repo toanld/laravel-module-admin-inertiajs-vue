@@ -115,6 +115,10 @@ class InstallAdminCommand extends Command
     function hasPackageJs($package){
         if(empty($this->packageJs)) {
             $composerArray = json_decode(file_get_contents(base_path() . "/package.json"),true);
+            if(isset($composerArray["type"]) && $composerArray["type"] == "module"){
+                unset($composerArray["type"]);
+                file_put_contents(base_path() . "/package.json", json_encode($composerArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            }
             if (isset($composerArray["devDependencies"])) {
                 $this->packageJs = array_merge($this->packageJs, $composerArray["devDependencies"]);
             }
