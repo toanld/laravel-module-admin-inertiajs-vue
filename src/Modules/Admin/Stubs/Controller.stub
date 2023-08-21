@@ -4,7 +4,7 @@ namespace Modules\$MODULE$\Http\Controllers$PATH_FOLDER$;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
-use Modules\$MODULE$\Http\Controllers\Controller;
+use Modules\Admin\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Modules\$MODULE$\Entities\$MODEL_NAME$ as ModelName;
