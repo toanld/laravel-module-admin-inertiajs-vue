@@ -6,7 +6,7 @@
     .bar {
         background: #d14;
         position: fixed;
-        z-index: 1031;
+        z-index: 100000;
         top: 0;
         left: 0;
         width: 100%;
@@ -29,21 +29,19 @@
     .spinner {
         display: block;
         position: fixed;
-        z-index: 1031;
-        top: 15px;
-        right: 15px;
+        z-index: 100000;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .spinner-icon {
-        width: 18px;
-        height: 18px;
+        width: 25px;
+        height: 25px;
         box-sizing: border-box;
-        border: solid 2px transparent;
-        border-top-color: #d14;
-        border-left-color: #d14;
+        border: solid 7px transparent;
         border-radius: 50%;
-        -webkit-animation: nprogress-spinner 400ms linear infinite;
-        animation: nprogress-spinner 400ms linear infinite;
+        animation: nprogress-spinner 400ms linear infinite, nprogress-spinner-colors 1600ms linear infinite;
     }
 }
 
@@ -53,7 +51,11 @@
 
 .nprogress-custom-parent {
     overflow: hidden;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Tạo nền mờ nếu cần */
 
     #nprogress {
         .spinner, .bar {
@@ -79,5 +81,27 @@
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes nprogress-spinner-colors {
+    0%, 100% {
+        border-top-color: #4285F4;
+        border-left-color: #4285F4;
+    }
+
+    25% {
+        border-top-color: #F3F3F3;
+        border-left-color: #F3F3F3;
+    }
+
+    50% {
+        border-top-color: #F4B400;
+        border-left-color: #F4B400;
+    }
+
+    75% {
+        border-top-color: #0F9D58;
+        border-left-color: #0F9D58;
     }
 }
