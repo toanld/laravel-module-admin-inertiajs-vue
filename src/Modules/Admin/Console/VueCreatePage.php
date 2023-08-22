@@ -191,7 +191,7 @@ class VueCreatePage extends Command
         //kiểm tra xem trong /Routers/web.php đã include admin chưa
         $routeWeb = file_get_contents(module_path($this->module) . "/Routes/web.php");
         if(strpos($routeWeb,'include_once __DIR__ . "/admin.php";') === false){
-            file_put_contents(module_path($this->module) . "/Routes/web.php",'Route::prefix(config("admin.route_prefix"))->group(function() {
+            file_put_contents(module_path($this->module) . "/Routes/web.php",'Route::prefix(config("admin.route_prefix"))->middleware(\'superadmin\')->group(function() {
     if(file_exists(__DIR__ . "/admin.php")) include_once __DIR__ . "/admin.php";
 });',FILE_APPEND);
         }

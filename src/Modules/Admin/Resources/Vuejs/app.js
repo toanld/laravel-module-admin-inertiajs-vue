@@ -11,6 +11,26 @@ import axios from "axios";
 window.translateFormData = new FormData();
 window.myTrans = myTrans;
 window.axios = axios;
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    NProgress.start();
+    return config;
+}, function (error) {
+    // Do something with request error
+    console.error(error)
+    return Promise.reject(error);
+});
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+    // Do something with response data
+    NProgress.done();
+    return response;
+}, function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+});
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 //const pinia = createPinia()

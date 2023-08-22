@@ -9,6 +9,7 @@ use Modules\Admin\Console\CreateUser;
 use Modules\Admin\Console\GenerateDatabase;
 use Modules\Admin\Console\InstallFirst;
 use Modules\Admin\Console\VueCreatePage;
+use Modules\Admin\Http\Middleware\AdminAuthenticate;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
+        $kernel->appendMiddlewareToGroup('superadmin', AdminAuthenticate::class);
         if ($this->app->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,

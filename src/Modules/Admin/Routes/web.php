@@ -33,54 +33,46 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])
 Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
+Route::middleware('superadmin')->group(function() {
+    Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
+    // Dashboard
 
-// Dashboard
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboard')
+        ->middleware('auth');
 
-Route::get('/', [DashboardController::class, 'index'])
-    ->name('dashboard')
-    ->middleware('auth');
+    // Users
 
-// Users
+    Route::get('users', [UsersController::class, 'index'])
+        ->name('users')
+        ->middleware('auth');
 
-Route::get('users', [UsersController::class, 'index'])
-    ->name('users')
-    ->middleware('auth');
+    Route::get('users/create', [UsersController::class, 'create'])
+        ->name('users.create')
+        ->middleware('auth');
 
-Route::get('users/create', [UsersController::class, 'create'])
-    ->name('users.create')
-    ->middleware('auth');
+    Route::post('users', [UsersController::class, 'store'])
+        ->name('users.store')
+        ->middleware('auth');
 
-Route::post('users', [UsersController::class, 'store'])
-    ->name('users.store')
-    ->middleware('auth');
+    Route::get('users/{user}/edit', [UsersController::class, 'edit'])
+        ->name('users.edit')
+        ->middleware('auth');
 
-Route::get('users/{user}/edit', [UsersController::class, 'edit'])
-    ->name('users.edit')
-    ->middleware('auth');
+    Route::put('users/{user}', [UsersController::class, 'update'])
+        ->name('users.update')
+        ->middleware('auth');
 
-Route::put('users/{user}', [UsersController::class, 'update'])
-    ->name('users.update')
-    ->middleware('auth');
+    Route::delete('users/{user}', [UsersController::class, 'destroy'])
+        ->name('users.destroy')
+        ->middleware('auth');
 
-Route::delete('users/{user}', [UsersController::class, 'destroy'])
-    ->name('users.destroy')
-    ->middleware('auth');
-
-Route::put('users/{user}/restore', [UsersController::class, 'restore'])
-    ->name('users.restore')
-    ->middleware('auth');
-
+    Route::put('users/{user}/restore', [UsersController::class, 'restore'])
+        ->name('users.restore')
+        ->middleware('auth');
+    if(file_exists(__DIR__ . "/admin.php")) include_once __DIR__ . "/admin.php";
+});
 
 
-// Posts
-Route::get('posts', [PostsController::class, 'index'])->name('posts')->middleware('auth');
-Route::get('posts/create', [PostsController::class, 'create'])->name('posts.create')->middleware('auth');
-Route::post('posts', [PostsController::class, 'store'])->name('posts.store')->middleware('auth');
-Route::get('posts/{model}/edit', [PostsController::class, 'edit'])->name('posts.edit')->middleware('auth');
-Route::put('posts/{model}', [PostsController::class, 'update'])->name('posts.update')->middleware('auth');
-Route::delete('posts/{model}', [PostsController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
-Route::put('posts/{model}/restore', [PostsController::class, 'restore'])->name('posts.restore')->middleware('auth');
-Route::post('/upload', 'UploadController@upload')->name('upload');

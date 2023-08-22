@@ -67,6 +67,10 @@ class InstallAdminCommand extends Command
                 $appConfig = str_replace("'web' => [","'web' => [\n            \\App\\Http\\Middleware\\HandleInertiaRequests::class,\n",$appConfig);
                 file_put_contents(base_path() . "/app/Http/Kernel.php",$appConfig);
             }
+            if(strpos($appConfig,"'superadmin' =>") === false){
+                $appConfig = str_replace('protected $middlewareGroups = [','protected $middlewareGroups = [' . "\n"  . "'superadmin' => [],\n",$appConfig);
+                file_put_contents(base_path() . "/app/Http/Kernel.php",$appConfig);
+            }
             $this->copyStub($stubDir . "/Config/modules.stub",base_path("config") . "/modules.php");
             $this->copyStub($stubDir . "/Config/ziggy.stub",base_path("config") . "/ziggy.php");
             $this->copyStub($stubDir . "/postcss.config.js",base_path() . "/postcss.config.js");

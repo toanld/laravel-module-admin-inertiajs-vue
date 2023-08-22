@@ -8,8 +8,8 @@ return [
             "route" => 'dashboard'
         ],
         [
-            "name" => "Bài viết",
-            "route" => 'posts'
+            "name" => "Crawler bài viết",
+            "route" => 'poststemp'
         ]
     ],
     'table_prefix' => 'admin_',

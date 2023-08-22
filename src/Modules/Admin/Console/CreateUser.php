@@ -46,6 +46,7 @@ class CreateUser extends Command
         User::factory()->create([
             'name' => $name,
             'email' => $email,
+            'admin_type'=>1,
             'password' => $password,
         ]);
     }
