@@ -15,7 +15,7 @@ class UploadController extends Controller
 {
     public function upload(Request $request){
         $validator = Validator::make($request->all(), [
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Đảm bảo chỉ tải lên ảnh và định dạng phù hợp
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Đảm bảo chỉ tải lên ảnh và định dạng phù hợp
         ]);
 
         if ($validator->fails()) {
@@ -24,8 +24,8 @@ class UploadController extends Controller
         $picture = $request->file('file');
         $extension = $picture->getClientOriginalExtension();
         $fileName = time() . '_' . Str::random(4) . '.' . $extension;
-        $path = $picture->storeAs('uploads', $fileName);
-        return response()->json(['location'=>"/storage/$path"]);
-
+        $path = $picture->storeAs('public/uploads', $fileName);
+        $path = str_replace("public/","",$path);
+        return response()->json(['location'=>"/storage/$path","data" => ["fullsize" => "/storage/$path"]]);
     }
 }

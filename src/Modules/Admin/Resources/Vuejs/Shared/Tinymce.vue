@@ -46,7 +46,6 @@ const post_image_upload_handler = (blobInfo, progress) => new Promise((resolve, 
             reject('HTTP Error: ' + xhr.status);
             return;
         }
-
         const json = JSON.parse(xhr.responseText);
 
         if (!json || typeof json.data.fullsize != 'string') {
