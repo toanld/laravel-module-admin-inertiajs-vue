@@ -2,5 +2,6 @@
 
 return [
     'url' => '',
+    'except' => ['_debugbar.*'],
     // Các cấu hình Ziggy khác...
 ];
