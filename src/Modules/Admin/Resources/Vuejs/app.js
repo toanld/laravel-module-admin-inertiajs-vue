@@ -1,5 +1,5 @@
 import NProgress from 'nprogress'
-import { createPinia } from 'pinia'
+//import { createPinia } from 'pinia'
 import { createApp, h} from 'vue';
 //import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 //window.md5 = require('md5');
@@ -13,7 +13,7 @@ window.myTrans = myTrans;
 window.axios = axios;
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-const pinia = createPinia()
+//const pinia = createPinia()
 
 createInertiaApp({
     progress: {
@@ -30,21 +30,17 @@ createInertiaApp({
         showSpinner: false,
     },
     title: (title) => `${title} - ${appName}`,
-    //resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     resolve: (name) => {
         let page = null;
 
         let isModule = name.split("::");
 
         if (isModule.length > 1) {
-            // let a =   import.meta.glob('@modules/Admin/Resources/Pages/Index.vue')['/modules/Admin/Resources/Pages/Index.vue']();
             let module = isModule[0];
             let pathTo = isModule[1];
             pathTo = pathTo.replace("\\", "/");
-            //console.log(module, pathTo);//Admin Resources/Pages/Index
             let key = `/Modules/${module}/${pathTo}.vue`;
             console.log(key);
-            //let value = import.meta.glob('@modules/*/Resources/Pages/**/*.vue');
             let value = import.meta.glob('@modules/*/Resources/Vuejs/Pages/**/*.vue');
             page = resolvePageComponent(key, value);
 
@@ -56,7 +52,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         let app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(pinia)
+            //.use(pinia)
             //.use(myPlugin)
             .use(ZiggyVue, Ziggy);
         return app.mount(el);
