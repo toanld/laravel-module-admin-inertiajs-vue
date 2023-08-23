@@ -40,7 +40,7 @@ class CreateUser extends Command
      */
     public function handle()
     {
-        $email = $this->ask('Nhập email','johndoe@example.com');
+        $email = $this->ask('Nhập email','toanld@example.com');
         $password = $this->ask('Nhập password','secret');
         $name = $this->ask('Nhập họ tên','Peter Lê');
         User::factory()->create([
