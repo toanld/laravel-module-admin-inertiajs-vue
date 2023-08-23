@@ -27,7 +27,6 @@ class InstallAdminCommand extends Command
             "@inertiajs/progress",
             "@inertiajs/vue3",
             "@popperjs/core",
-            "pinia",
             "sass",
             "nprogress",
             "postcss",
