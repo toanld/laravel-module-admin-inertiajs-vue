@@ -21,6 +21,8 @@ class InstallAdminCommand extends Command
             "toanld/modules-inertia",
             "toanld/multi-relationships",
             "inertiajs/inertia-laravel",
+            "intervention/image"
+
         ];
         $arrayNpm = [
             "@inertiajs/inertia",

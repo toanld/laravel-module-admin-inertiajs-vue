@@ -10,3 +10,4 @@ Route::put('posts/{model}', [PostsController::class, 'update'])->name('posts.upd
 Route::delete('posts/{model}', [PostsController::class, 'destroy'])->name('posts.destroy')->middleware('auth');
 Route::put('posts/{model}/restore', [PostsController::class, 'restore'])->name('posts.restore')->middleware('auth');
 Route::post('/upload', 'UploadController@upload')->name('upload');
+Route::post('/destroy', 'UploadController@destroy')->name('destroy');

@@ -48,12 +48,12 @@ const post_image_upload_handler = (blobInfo, progress) => new Promise((resolve, 
         }
         const json = JSON.parse(xhr.responseText);
 
-        if (!json || typeof json.data.fullsize != 'string') {
+        if (!json || typeof json.data[0].fullsize != 'string') {
             reject('Invalid JSON: ' + xhr.responseText);
             return;
         }
 
-        resolve(json.data.fullsize);
+        resolve(json.data[0].fullsize);
     };
 
     xhr.onerror = () => {

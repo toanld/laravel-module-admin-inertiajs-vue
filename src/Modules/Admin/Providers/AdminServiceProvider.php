@@ -37,6 +37,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
         $kernel->appendMiddlewareToGroup('superadmin', AdminAuthenticate::class);
+        $kernel->pushMiddleware('Modules\Admin\Http\Middleware\CreateThumbImage');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,
