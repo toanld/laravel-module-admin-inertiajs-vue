@@ -9,7 +9,7 @@
     <div class="rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
           <div class="flex flex-wrap -mr-6 p-4">
-              <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="Tiêu đề" />
+              <text-input label="Tiêu đề" v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2"  />
           </div>
           <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
               <button v-if="!model.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Xóa bài viết</button>

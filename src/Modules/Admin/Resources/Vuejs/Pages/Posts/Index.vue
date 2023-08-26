@@ -14,6 +14,7 @@
         <tr class="text-left font-bold">
           <th class="pb-4 pt-6 px-6">ID</th>
           <th class="pb-4 pt-6 px-6">Name</th>
+          <th class="pb-4 pt-6 px-6">Picture</th>
           <th class="pb-4 pt-6 px-6">Updated</th>
         </tr>
         <tr v-for="(item,id) in posts.data" :key="item.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
@@ -25,6 +26,9 @@
               {{ item.name }}
               <icon v-if="item.deleted_at" name="trash" class="flex-shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
+          </td>
+          <td class="border-t text-center">
+            <img :src="JSON.parse(item.pictures)[0]['thumb']" class="h-auto w-14 rounded-lg">
           </td>
           <td class="border-t">
             <Link class="flex items-center px-6 py-4" :href="route('posts.edit',item.id)" tabindex="-1">

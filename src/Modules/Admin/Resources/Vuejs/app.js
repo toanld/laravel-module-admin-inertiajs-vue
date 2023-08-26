@@ -6,23 +6,36 @@ import { createApp, h} from 'vue';
 import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../../../vendor/toanld/ziggy/dist/vue.m';
-import {myTrans} from "@admin/functions";
+import {myTrans,takephoto,resizeBase64Img} from "@admin/functions";
 import {MyForm} from "./form/MyForm";
 import axios from "axios";
 import { apiGet, apiPost, apiPut, apiPatch, apiDelete } from './api.js';
+
+window.addEventListener('error', function(event) {
+    console.error('Có lỗi xảy ra:', event.error);
+});
 window.apiGet = apiGet;
 window.apiPost = apiPost;
 window.apiPut = apiPut;
 window.apiPatch = apiPatch;
 window.apiDelete = apiDelete;
+window.takephoto = takephoto;
+window.resizeBase64Img = resizeBase64Img;
 window.MyForm = MyForm;
 window.translateFormData = new FormData();
 window.myTrans = myTrans;
 window.axios = axios;
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found in the page.');
+}
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     NProgress.start();
+    console.log('start NProgress');
     return config;
 }, function (error) {
     // Do something with request error
@@ -31,11 +44,17 @@ axios.interceptors.request.use(function (config) {
 });
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use( async function (response) {
     // Do something with response data
     NProgress.done();
     return response;
-}, function (error) {
+},  async function (error) {
+    NProgress.done();
+    console.error("loi o day" + window.location.href);
+    //var base64Error = await takephoto();
+    //console.log(base64Error);
+
+    console.error(error);
     // Do something with response error
     return Promise.reject(error);
 });
@@ -100,3 +119,10 @@ router.on('start', () => NProgress.start())
 router.on('finish', () => {
     NProgress.done();
 })
+window.onerror = function(message, source, lineno, colno, error) {
+    console.error('Có lỗi xảy ra:', error);
+};
+window.addEventListener('unhandledrejection', function(event) {
+    console.error('Promise bị từ chối:', event.reason);
+});
+

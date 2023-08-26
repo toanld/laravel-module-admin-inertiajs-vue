@@ -2,7 +2,7 @@
   <div>
     <Head title="Dashboard" />
     <h1 class="mb-8 text-3xl font-bold">Dashboard</h1>
-    <p class="mb-8 leading-normal">Hey there! Welcome to Ky Nguyen so.</p>
+    <p class="mb-8 leading-normal" @click="chupanh">Hey there! Welcome to Ky Nguyen so.</p>
   </div>
 </template>
 
@@ -15,5 +15,11 @@ export default {
     Head,
   },
   layout: Layout,
+  methods:{
+      async chupanh(){
+          let img = await takephoto();
+          console.log(img);
+      }
+  }
 }
 </script>

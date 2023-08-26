@@ -10,10 +10,12 @@
           <file-input v-model:data="form.pictures"    />
           <text-input v-model="form.name" :error="form.errors.name" class="mb-4" label="Tiêu đề" />
           <textarea-input v-model="form.teaser" :error="form.errors.teaser" class="pb-8 pr-6 w-full" label="Tóm tắt" />
-          <editor v-model="form.description" :error="form.errors.description"></editor>
-        <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Lưu bài viết</loading-button>
-        </div>
+            
+          <editor v-model="form.description" :error="form.errors.description" class="mb-4"></editor>
+          <checkbox v-model="form.status" :error="form.errors.status" class="" label="Trạng thái"/>
+          <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
+            <loading-button :loading="form.processing" class="btn-indigo" type="submit">Lưu bài viết</loading-button>
+          </div>
       </form>
     </div>
   </div>
@@ -28,6 +30,7 @@ import SelectInput from '@admin/Shared/SelectInput.vue'
 import LoadingButton from '@admin/Shared/LoadingButton.vue'
 import editor from '@admin/Shared/Tinymce.vue'
 import FileInput from '@admin/Shared/ImageFile.vue'
+import Checkbox from '@admin/Shared/Checkbox.vue'
 export default {
   components: {
     Head,
@@ -38,6 +41,7 @@ export default {
     TextareaInput,
     TextInput,
       FileInput,
+      Checkbox,
   },
   layout: Layout,
   props: {
@@ -50,7 +54,8 @@ export default {
         name: '',
         teaser: '',
         pictures:[],
-        description: null
+        description: null,
+        status: true
       }),
     }
   },

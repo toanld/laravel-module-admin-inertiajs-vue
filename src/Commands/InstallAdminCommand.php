@@ -30,6 +30,7 @@ class InstallAdminCommand extends Command
             "@inertiajs/vue3",
             "@popperjs/core",
             "sass",
+            "html2canvas",
             "nprogress",
             "postcss",
             "postcss-import",

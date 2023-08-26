@@ -1,7 +1,5 @@
 <?php
 function imageGetPathThumb($fileName,$w,$h){
-    $fileTime = intval($fileName);
-    $pathTime = date("Y/m",$fileTime);
     return "/storage/uploads/thumb/" . $w . "/" . $h . "/" . $fileName;
 }
 function imageGetPathFullsize($fileName){

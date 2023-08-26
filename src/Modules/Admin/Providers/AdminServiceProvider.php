@@ -3,6 +3,7 @@
 namespace Modules\Admin\Providers;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Admin\Console\CreateUser;
@@ -45,6 +46,13 @@ class AdminServiceProvider extends ServiceProvider
                 CreateUser::class
             ]);
         }
+        Validator::extend('my_number', function ($attribute, $value) {
+
+            // This will only accept alpha and spaces.
+            // If you want to accept hyphens use: /^[\pL\s-]+$/u.
+            return preg_match('/^[0-9\.\,]+$/u', $value);
+
+        });
     }
 
     /**

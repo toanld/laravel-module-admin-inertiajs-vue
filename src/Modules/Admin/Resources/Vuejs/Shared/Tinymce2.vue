@@ -33,52 +33,52 @@ const getCssUrls = () => {
 };
 
 const post_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
-  const xhr = new XMLHttpRequest();
-  xhr.withCredentials = false;
-  xhr.open('POST', route('upload'));
-   var token = document.head.querySelector("[name=csrf-token]").content;
-   console.log(token)
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    xhr.open('POST', route('upload'));
+    var token = document.head.querySelector("[name=csrf-token]").content;
+    console.log(token)
     xhr.setRequestHeader("X-CSRF-Token", token);
-  xhr.upload.onprogress = (e) => {
-    progress(e.loaded / e.total * 100);
-  };
+    xhr.upload.onprogress = (e) => {
+        progress(e.loaded / e.total * 100);
+    };
 
-  xhr.onload = () => {
-    if (xhr.status === 403) {
-      reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-      return;
-    }
+    xhr.onload = () => {
+        if (xhr.status === 403) {
+            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+            return;
+        }
 
-    if (xhr.status < 200 || xhr.status >= 300) {
-      reject('HTTP Error: ' + xhr.status);
-      return;
-    }
+        if (xhr.status < 200 || xhr.status >= 300) {
+            reject('HTTP Error: ' + xhr.status);
+            return;
+        }
+        const json = JSON.parse(xhr.responseText);
 
-    const json = JSON.parse(xhr.responseText);
+        if (!json || typeof json.data[0].fullsize != 'string') {
+            reject('Invalid JSON: ' + xhr.responseText);
+            return;
+        }
 
-    if (!json || typeof json.data.fullsize != 'string') {
-      reject('Invalid JSON: ' + xhr.responseText);
-      return;
-    }
+        resolve(json.data[0].fullsize);
+    };
 
-    resolve(json.data.fullsize);
-  };
+    xhr.onerror = () => {
+        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+    };
 
-  xhr.onerror = () => {
-    reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-  };
+    const formData = new FormData();
+    formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-  const formData = new FormData();
-  formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-  xhr.send(formData);
+    xhr.send(formData);
 });
 
 </script>
 <template>
-    <editor
-        api-key="b82c46fpu6v40ajjpr5r5q1foi5jvxjd1fnj76cexqc9udbg"
-        :init="{
+    <div>
+        <editor
+            api-key="b82c46fpu6v40ajjpr5r5q1foi5jvxjd1fnj76cexqc9udbg"
+            :init="{
           height: 400,
           menubar: false,
           plugins: 'importcss anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
@@ -92,13 +92,14 @@ const post_image_upload_handler = (blobInfo, progress) => new Promise((resolve, 
             // automatic_uploads: false
           images_upload_handler: post_image_upload_handler,
           // convert_urls: false,
-          images_upload_base_path: '/tesst'
+          //images_upload_base_path: '/tesst'
           // file_picker_callback: callBack
 
 
         }"
-        v-model="computedValue"
-      />
+            v-model="computedValue"
+        />
+    </div>
 </template>
 <style type="text/css">
     .tox-notifications-container{

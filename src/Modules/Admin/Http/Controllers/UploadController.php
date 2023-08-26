@@ -19,13 +19,11 @@ class UploadController extends Controller
         $files = array_keys($request->allFiles());
         $arrValidate = [];
         foreach ($files as $file){
-            $arrValidate[$file] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
+            $arrValidate[$file] = 'required|image|mimes:jpeg,png,jpg,gif|max:204800';
         }
-        $validator = Validator::make($request->all(), $arrValidate);
+        //$validator = Validator::make($request->all(), $arrValidate);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+        $validate = \Illuminate\Support\Facades\Request::validate($arrValidate);
         $arrData = [];
         foreach ($files as $file) {
             $picture = $request->file($file);
@@ -41,6 +39,56 @@ class UploadController extends Controller
             ];
         }
         return response()->json(['location'=>imageGetPathFullsize($fileName),"data" => $arrData]);
+    }
+
+
+    public function getLastUpload($limit){
+        $folder = null;
+        $path = storage_path("app/public/uploads");
+        for($i = 12; $i > 0; $i--){
+            if($i < 10) $i = "0$i";
+
+            if(is_dir($path . "/" . date("Y") . "/$i")){
+                $folder = date("Y") . "/$i";
+                break;
+            }
+        }
+        $arrData = [];
+        $fileName = null;
+        if(!empty($folder)){
+            $path = $path . "/$folder";
+            $files = $this->scanFilesInDirectory($path,$limit);
+            foreach ($files as $file){
+                if(empty($fileName)) $fileName = $file;
+                $arrData[] =  [
+                    "filename" => $file,
+                    "fullsize" => imageGetPathFullsize($file),
+                    "thumb" => imageGetPathThumb($file,600,400)
+                ];
+            }
+        }
+        if(!empty($arrData)){
+            $arrData = ['location'=>imageGetPathFullsize($fileName),"data" => $arrData];
+        }
+        return response()->json($arrData);;
+    }
+
+    function scanFilesInDirectory($directory, $limit) {
+        $fileList = scandir($directory,1);
+        $scannedFiles = [];
+
+        $fileCount = 0;
+        foreach ($fileList as $file) {
+            if ($fileCount >= $limit) {
+                break;
+            }
+            if ($file !== '.' && $file !== '..' && is_file($directory . '/' . $file)) {
+                $scannedFiles[] = $file;
+                $fileCount++;
+            }
+        }
+
+        return $scannedFiles;
     }
 
          /**

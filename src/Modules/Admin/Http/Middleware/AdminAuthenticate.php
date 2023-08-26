@@ -18,7 +18,7 @@ class AdminAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && (auth()->user()->admin_type & Constants::ADMIN_TYPE_SUPER) === Constants::ADMIN_TYPE_SUPER) {
+        if (auth()->check() && (auth()->user()->admin_type & Constants::USER_TYPE_SUPER_ADMIN) === Constants::USER_TYPE_SUPER_ADMIN) {
             return $next($request);
         }
         return redirect("/");

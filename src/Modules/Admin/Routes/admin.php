@@ -11,3 +11,4 @@ Route::delete('posts/{model}', [PostsController::class, 'destroy'])->name('posts
 Route::put('posts/{model}/restore', [PostsController::class, 'restore'])->name('posts.restore')->middleware('auth');
 Route::post('/upload', 'UploadController@upload')->name('upload');
 Route::post('/destroy', 'UploadController@destroy')->name('destroy');
+Route::middleware('auth')->get('/uploads/lastest/{limit}','UploadController@getLastUpload')->name('upload.lastest');

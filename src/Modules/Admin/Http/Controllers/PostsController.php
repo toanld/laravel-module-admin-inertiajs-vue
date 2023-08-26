@@ -31,6 +31,8 @@ class PostsController extends Controller
             'name' => ['required', 'max:255'],
             'teaser' => ['required', 'max:500'],
             'description' => ['required'],
+            'pictures' => ['array'],
+            'status' => ['boolean'],
         ]);
         $slug = Str::slug($validate['name']);
         $md5 = md5($slug);
@@ -38,11 +40,23 @@ class PostsController extends Controller
         $model->name = $validate['name'];
         $model->slug = $slug;
         $model->md5 = $md5;
+        $model->length = strlen($slug);
         $model->teaser = $validate['teaser'];
         $model->description = $validate['description'];
+        $model->use_id = Auth::user()->id;
+        $model->status = $validate['status'] ? 1 : 0;
+
+        $pictures = [];
+        foreach ($validate['pictures'] as $pic){
+            $pictures[] = [
+                "filename" => $pic["filename"],
+                "thumb" => $pic["thumb"]
+            ];
+        }
+        $model->pictures = json_encode($pictures);
         $model->save();
 
-        return Redirect::route('posts')->with('success', 'Contact created.');
+        return Redirect::route('posts')->with('success', 'Data created.');
     }
 
     public function edit( ModelName $model)
@@ -58,23 +72,40 @@ class PostsController extends Controller
             'name' => ['required', 'max:255'],
             'teaser' => ['required', 'max:500'],
             'description' => ['required'],
+            'pictures' => ['array'],
+            'status' => ['boolean'],
         ]);
+        $slug = Str::slug($validate['name']);
+        $md5 = md5($slug);
         $model->name = $validate['name'];
+        $model->slug = $slug;
+        $model->md5 = $md5;
+        $model->length = strlen($slug);
         $model->teaser = $validate['teaser'];
         $model->description = $validate['description'];
+        $model->use_id = Auth::user()->id;
+        $model->status = $validate['status'] ? 1 : 0;
+        $pictures = [];
+        foreach ($validate['pictures'] as $pic){
+            $pictures[] = [
+                "filename" => $pic["filename"],
+                "thumb" => $pic["thumb"]
+            ];
+        }
+        $model->pictures = json_encode($pictures);
         $model->save();
-        return Redirect::route('posts')->with('success', 'Contact updated.');
+        return Redirect::route('posts')->with('success', 'Data updated.');
     }
 
     public function destroy(ModelName $model)
     {
         $model->delete();
-        return Redirect::route('posts')->with('success', 'Contact deleted.');
+        return Redirect::route('posts')->with('success', 'Data deleted.');
     }
 
     public function restore(ModelName $model)
     {
         $model->restore();
-        return Redirect::back()->with('success', 'Contact restored.');
+        return Redirect::back()->with('success', 'Data restored.');
     }
 }

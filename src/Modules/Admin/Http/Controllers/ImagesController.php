@@ -20,4 +20,6 @@ class ImagesController extends Controller
 
         return $server->getImageResponse($path, $request->all());
     }
+
+
 }

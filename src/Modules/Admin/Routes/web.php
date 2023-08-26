@@ -33,6 +33,8 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])
 Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
+Route::post('/upload_image', 'UploadController@upload')->name('upload_image');
+
 Route::middleware('superadmin')->group(function() {
     Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');

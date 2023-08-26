@@ -10,20 +10,12 @@
                 }" v-for="(item, key) in fileUploaded" >
                 <div class="absolute group  w-full h-full" >
                     <div class="absolute hidden group-hover:flex div-icon w-full h-full flex justify-center items-center">
-                        <BaseIcon v-if="multiple"
-                            @click="active(key)"
-                            :path="mdiProgressCheck"
-                            class="flex-none cursor-pointer"
-                            w="w-10"
-                            :size="18"
-                          />
-                          <BaseIcon
-                            @click="del(item,key)"
-                            :path="mdiDeleteForever"
-                            class="flex-none cursor-pointer"
-                            w="w-10"
-                            :size="18"
-                          />
+                       <!--  <svg v-if="multiple" @click="active(key)" class="w-3 h-3 text-green-500 cursor-pointer mr-1.5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+                        </svg> -->
+                        <svg v-if="multiple" @click="del(key)" class="w-3 h-3 text-red-500 cursor-pointer dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                            <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
+                        </svg>
                       </div>
                   </div>
                   <div v-if="item.active == 1" class="bg-green-400 text-white absolute bottom-4 h-6 w-full flex items-center justify-center">Ảnh chính</div>
@@ -40,7 +32,6 @@
             <input id="dropzone-file" type="file" multiple class="hidden" @change="changeImage" />
         </label>
         <label :for="'dropzone-file'+key" class="flex flex-col items-center justify-center w-32 h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600" v-if="!multiple && fileUploaded.length < 1">
-
             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Tải ảnh</span></p>
@@ -48,6 +39,7 @@
             </div>
             <input :id="'dropzone-file'+key" type="file" multiple class="hidden" @change="changeImage" />
         </label>
+
     </div>
     <slot></slot>
 </template>
@@ -61,14 +53,17 @@
             type: Array,
             default: () => []
         },
-
+        url: {
+            type : String,
+            default : route('upload')
+        },
         multiple : Boolean,
         key: Number
     })
     const emit = defineEmits(['update:data'])
 
     onMounted(() => {
-        fileUploaded.value = props.data
+        fileUploaded.value = props.data;
     })
 
     onUpdated(() => {
@@ -130,7 +125,7 @@
             if(item.type == 'image/jpeg' || item.type == 'image/png' || item.type == 'image/jpg'){
                 form = new FormData();
                 form.append('file', item);
-                apiPost(route('upload'), form)
+                apiPost(props.url, form)
                 .then(res => {
                     console.log(res.data.error)
                     if(res.data.error){
@@ -149,6 +144,7 @@
         }
         files.value = [];
     }
+
     const hiddenFile = (lastModified) => {
         if(files.value.lastModified === lastModified){
             files.value.show = false;
@@ -157,6 +153,6 @@
 </script>
 <style lang='css'>
     .div-icon{
-        background: #cccccca3;
+        background: #e7e3e3a3;
     }
 </style>
