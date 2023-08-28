@@ -12,7 +12,6 @@ trait HasManyKeyByTrait
      * @param null $foreignKey
      * @param null $localKey
      * @return HasMany
-     * Example: return $this->hasManyKeyBy('id', AttributeValue::class, 'attribute_id', 'id');
      */
     protected function hasManyKeyBy($keyBy, $related, $foreignKey = null, $localKey = null)
     {
