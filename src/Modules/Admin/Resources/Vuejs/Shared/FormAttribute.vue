@@ -2,6 +2,7 @@
     <template v-for="(attr,i) in new_attr">
         <editor class="pl-4 pr-4 pb-4 w-full" v-if="attr.type == 'editor'" :style="(attr.style_css != '') ? attr.style_css : ''" v-model="attr.value" :label="attr.name"  :error="form.errors['attributes.'+attr.key+'.value']"></editor>
         <text-input v-else-if="attr.type == 'textbox'" v-model="attr.value" :style="(attr.style_css != '') ? attr.style_css : ''" class="pl-4 pr-4 pb-4 w-full lg:w-1/3" :label="attr.name"  :error="form.errors['attributes.'+attr.key+'.value']" />
+        <file-input v-else-if="attr.type == 'picture'" v-model:data="attr.value" :style="(attr.style_css != '') ? attr.style_css : ''" :error="form.errors['attributes.'+attr.key+'.value']" class="pl-4 pr-4 pb-4 w-full" :label="attr.name"   />
         <textarea-input v-else-if="attr.type == 'textarea'" v-model="attr.value" :style="(attr.style_css != '') ? attr.style_css : ''" class="pl-4 pr-4 pb-4 w-full lg:w-1/3" :label="attr.name"  :error="form.errors['attributes.'+attr.key+'.value']" />
         <select-input v-else-if="attr.type == 'select'" :label="attr.name" :style="(attr.style_css != '') ? attr.style_css : ''" v-model="attr.value" class="pl-4 pr-4 pb-4 w-full/2"  :error="form.errors['attributes.'+attr.key+'.value']" >
             <option value="0" selected>Chọn giá trị {{attr.name}}</option>

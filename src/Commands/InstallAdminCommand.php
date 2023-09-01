@@ -38,7 +38,6 @@ class InstallAdminCommand extends Command
             "@tailwindcss/line-clamp",
             "tailwindcss",
             "lodash",
-            "@tinymce/tinymce-vue",
             "autoprefixer",
             "@vitejs/plugin-vue",
             "vue",

@@ -23,4 +23,9 @@ class Post extends Model
     {
         return \Modules\Admin\Database\factories\PostFactory::new();
     }
+
+    public function getPictureAttribute()
+    {
+        return json_decode($this->pictures,true);
+    }
 }
