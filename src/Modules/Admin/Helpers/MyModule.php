@@ -49,7 +49,9 @@ class MyModule
         foreach ($modules as $module => $status){
             $keyconfig = strtolower($module) . ".menu";
             if(!empty(config($keyconfig))){
-                $arrayMenu = array_merge($arrayMenu,config($keyconfig));
+                foreach (config($keyconfig) as $k => $v){
+                    $arrayMenu[] = $v;
+                }
             }
 
         }

@@ -1,4 +1,8 @@
 <?php
+use Modules\Admin\Http\Controllers\DemoController;
+
+use Modules\Admin\Http\Controllers\CategoryPostController;
+
 // Posts
 use Modules\Admin\Http\Controllers\PostsController;
 
@@ -12,3 +16,20 @@ Route::put('posts/{model}/restore', [PostsController::class, 'restore'])->name('
 Route::post('/upload', 'UploadController@upload')->name('upload');
 Route::post('/destroy', 'UploadController@destroy')->name('destroy');
 Route::middleware('auth')->get('/uploads/lastest/{limit}','UploadController@getLastUpload')->name('upload.lastest');
+
+
+//CategoryPostController
+Route::get('categoryposts', [CategoryPostController::class, 'index'])->name('categoryposts')->middleware('auth');
+Route::get('categoryposts/create', [CategoryPostController::class, 'create'])->name('categoryposts.create')->middleware('auth');
+Route::post('categoryposts', [CategoryPostController::class, 'store'])->name('categoryposts.store')->middleware('auth');
+Route::get('categoryposts/{model}/edit', [CategoryPostController::class, 'edit'])->name('categoryposts.edit')->middleware('auth');
+Route::put('categoryposts/{model}', [CategoryPostController::class, 'update'])->name('categoryposts.update')->middleware('auth');
+Route::delete('categoryposts/{model}', [CategoryPostController::class, 'destroy'])->name('categoryposts.destroy')->middleware('auth');
+Route::put('categoryposts/{model}/restore', [CategoryPostController::class, 'restore'])->name('categoryposts.restore')->middleware('auth');
+
+
+
+//DemoController
+Route::get('demo', [DemoController::class, 'create'])->name('demo')->middleware('auth');
+Route::get('demo/api', [DemoController::class, 'api'])->name('api.demo')->middleware('auth');
+Route::post('demo', [DemoController::class, 'store'])->name('demo.store')->middleware('auth');

@@ -6,11 +6,12 @@ import { createApp, h} from 'vue';
 import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../../../vendor/toanld/ziggy/dist/vue.m';
+import { ModelSelect,ModelListSelect,MultiListSelect,MultiSelect } from "vue-search-select"
 import {myTrans,takephoto,resizeBase64Img} from "@admin/functions";
 import {MyForm} from "./form/MyForm";
 import axios from "axios";
 import { apiGet, apiPost, apiPut, apiPatch, apiDelete } from './api.js';
-
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.addEventListener('error', function(event) {
     console.error('Có lỗi xảy ra:', event.error);
 });
@@ -101,6 +102,7 @@ createInertiaApp({
             .use(plugin)
             //.use(pinia)
             //.use(myPlugin)
+            //.use(ModelSelect).use(ModelListSelect).use(MultiListSelect).use(MultiSelect)
             .use(ZiggyVue, Ziggy);
         return app.mount(el);
     },

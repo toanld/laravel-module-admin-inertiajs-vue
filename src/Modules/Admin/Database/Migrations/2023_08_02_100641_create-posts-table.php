@@ -42,7 +42,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('blog_posts');
         //
     }
 };

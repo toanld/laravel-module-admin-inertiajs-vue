@@ -72,6 +72,16 @@ export class MyForm {
         return this.submit('patch', url);
     }
 
+    /**
+     * Send a GET request to the given URL.
+     * .
+     * @param {string} url
+     */
+    get(url) {
+        return apiGet(url,this.data());
+        //return this.submit('get', url);
+    }
+
 
     /**
      * Send a DELETE request to the given URL.
@@ -94,13 +104,10 @@ export class MyForm {
             axios[requestType](url, this.data())
                 .then(response => {
                     this.onSuccess(response.data);
-
                     resolve(response.data);
                 })
                 .catch(error => {
-                    console.log(error);
                     this.onFail(error);
-
                     reject(error);
                 });
         });
@@ -113,8 +120,7 @@ export class MyForm {
      * @param {object} data
      */
     onSuccess(data) {
-        alert(data.message); // temporary
-
+       console.log(data.message);
         this.reset();
     }
 

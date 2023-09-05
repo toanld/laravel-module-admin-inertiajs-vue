@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -53,6 +54,14 @@ class AdminServiceProvider extends ServiceProvider
             return preg_match('/^[0-9\.\,]+$/u', $value);
 
         });
+        if(App::isLocal()){
+            $adminMenu = config('admin.menu');
+            $adminMenu[]=[
+                'name' => 'demo',
+                'route' => 'demo',
+            ];
+            Config::set('admin.menu',$adminMenu);
+        }
     }
 
     /**

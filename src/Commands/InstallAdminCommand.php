@@ -21,6 +21,7 @@ class InstallAdminCommand extends Command
             "toanld/modules-inertia",
             "toanld/multi-relationships",
             "inertiajs/inertia-laravel",
+            "kalnoy/nestedset",
             "intervention/image"
 
         ];
@@ -40,6 +41,7 @@ class InstallAdminCommand extends Command
             "lodash",
             "autoprefixer",
             "@vitejs/plugin-vue",
+            "vue-search-select",
             "vue",
         ];
         $checkInstall = false;
