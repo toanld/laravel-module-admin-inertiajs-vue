@@ -6,7 +6,6 @@ import { createApp, h} from 'vue';
 import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../../../vendor/toanld/ziggy/dist/vue.m';
-import { ModelSelect,ModelListSelect,MultiListSelect,MultiSelect } from "vue-search-select"
 import {myTrans,takephoto,resizeBase64Img} from "@admin/functions";
 import {MyForm} from "./form/MyForm";
 import axios from "axios";
@@ -102,7 +101,6 @@ createInertiaApp({
             .use(plugin)
             //.use(pinia)
             //.use(myPlugin)
-            //.use(ModelSelect).use(ModelListSelect).use(MultiListSelect).use(MultiSelect)
             .use(ZiggyVue, Ziggy);
         return app.mount(el);
     },
