@@ -26,6 +26,7 @@ class PostsController extends Controller
         $model->length = strlen($slug);
         $model->teaser = $teaser;
         $model->description = $content;
+        $model->pictures = [];
         $model->status = 1;
         if(empty($title) || empty($content) || empty($teaser)){
             return [
