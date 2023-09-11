@@ -9,9 +9,41 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Modules\Admin\Entities\Post as ModelName;
+use Modules\Admin\Helpers\Classes\HtmlCleanUp;
 
 class PostsController extends Controller
 {
+    public function api(\Illuminate\Http\Request $request){
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $teaser = $request->input('intro');
+        $slug = Str::slug($title);
+        $md5 = md5($slug);
+        $model = new ModelName();
+        $model->name = $title;
+        $model->slug = $slug;
+        $model->md5 = $md5;
+        $model->length = strlen($slug);
+        $model->teaser = $teaser;
+        $model->description = $content;
+        $model->status = 1;
+        if(empty($title) || empty($content) || empty($teaser)){
+            return [
+                "success" => false,
+                "post_id" => "empty data post"
+            ];
+        }else{
+            $model->save();
+            return [
+                "success" => true,
+                "data" => [
+                    "post_id" => $model->id
+                ]
+
+            ];
+        }
+
+    }
     public function index()
     {
         return Inertia::module('admin::Posts/Index', [
@@ -75,6 +107,7 @@ class PostsController extends Controller
             'pictures' => ['array'],
             'status' => ['boolean'],
         ]);
+
         $slug = Str::slug($validate['name']);
         $md5 = md5($slug);
         $model->name = $validate['name'];
@@ -92,7 +125,9 @@ class PostsController extends Controller
                 "thumb" => $pic["thumb"]
             ];
         }
+
         $model->pictures = json_encode($pictures);
+
         $model->save();
         return Redirect::route('posts')->with('success', 'Data updated.');
     }

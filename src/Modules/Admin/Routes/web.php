@@ -76,5 +76,9 @@ Route::middleware('superadmin')->group(function() {
         ->middleware('auth');
     if(file_exists(__DIR__ . "/admin.php")) include_once __DIR__ . "/admin.php";
 });
+Route::post('api/posts', [PostsController::class, 'api'])
+    ->name('api.posts');
+Route::post('api/posts/upload', [\Modules\Admin\Http\Controllers\UploadController::class, 'upload'])
+    ->name('api.posts.upload');
 
 

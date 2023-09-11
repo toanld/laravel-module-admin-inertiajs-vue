@@ -28,7 +28,7 @@
             </Link>
           </td>
           <td class="border-t text-center">
-            <img :src="JSON.parse(item.pictures)[0] ? JSON.parse(item.pictures)[0]['thumb'] : '/logo/no-image.svg'" class="h-auto w-14 rounded-lg">
+            <img :src="item.picture" class="h-auto w-14 rounded-lg">
           </td>
           <td class="border-t">
             <Link class="flex items-center px-6 py-4" :href="route('posts.edit',item.id)" tabindex="-1">

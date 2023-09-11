@@ -5,6 +5,7 @@ class MyModule
     protected $modules = false;
     protected $currentModule = null;
     protected $rootViewInetia = 'admin::layouts.app';
+    protected $arrayVar = [];
     function rootViewInetia($rootView = null){
         if(!empty($rootView)) $this->rootViewInetia = $rootView;
         return $this->rootViewInetia;
@@ -60,6 +61,15 @@ class MyModule
             $arrayMenu[$key] = $row;
         }
         return $arrayMenu;
+    }
+    public function setVar($key,$value){
+        $this->arrayVar[$key] = $value;
+    }
+    public function getVar($key){
+        if(isset($this->arrayVar[$key])){
+            return $this->arrayVar[$key];
+        }
+        return null;
     }
 }
 function mymodule(){

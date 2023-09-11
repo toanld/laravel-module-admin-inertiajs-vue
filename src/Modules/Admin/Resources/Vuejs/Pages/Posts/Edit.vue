@@ -60,7 +60,7 @@ export default {
         name: this.post.name,
         teaser: this.post.teaser,
         description: this.post.description,
-        pictures: JSON.parse(this.post.pictures),
+        pictures: this.post.pictures,
         status: this.post.status ? true : false,
       }),
     }

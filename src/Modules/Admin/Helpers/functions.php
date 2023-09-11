@@ -137,3 +137,21 @@ function generateDurationShort($int_time, $default="1 phút"){
 function replaceKeywordPlusToWhiteSpace($keyword) {
     return preg_replace('/\++|\s+/', ' ', $keyword);
 }
+function replaceFCK($string, $type = 0)
+{
+    $array_fck = array("&Agrave;", "&Aacute;", "&Acirc;", "&Atilde;", "&Egrave;", "&Eacute;", "&Ecirc;", "&Igrave;", "&Iacute;", "&Icirc;",
+        "&Iuml;", "&ETH;", "&Ograve;", "&Oacute;", "&Ocirc;", "&Otilde;", "&Ugrave;", "&Uacute;", "&Yacute;", "&agrave;",
+        "&aacute;", "&acirc;", "&atilde;", "&egrave;", "&eacute;", "&ecirc;", "&igrave;", "&iacute;", "&ograve;", "&oacute;",
+        "&ocirc;", "&otilde;", "&ugrave;", "&uacute;", "&ucirc;", "&yacute;",
+    );
+    $array_text = array("À", "Á", "Â", "Ã", "È", "É", "Ê", "Ì", "Í", "Î",
+        "Ï", "Ð", "Ò", "Ó", "Ô", "Õ", "Ù", "Ú", "Ý", "à",
+        "á", "â", "ã", "è", "é", "ê", "ì", "í", "ò", "ó",
+        "ô", "õ", "ù", "ú", "û", "ý",
+    );
+    if ($type == 1) $string = str_replace($array_fck, $array_text, $string);
+    else $string = str_replace($array_text, $array_fck, $string);
+
+    return $string;
+}
+
