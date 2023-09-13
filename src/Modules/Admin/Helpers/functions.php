@@ -25,6 +25,14 @@ function get_pictures_save_path($file,$type='products'){
     if(file_exists($path)){
         return $path;
     }
+    $path = storage_path_picture("pictures/products") . date("m/d",$fileTime) . "/" . $file;
+    if(file_exists($path)){
+        return $path;
+    }
+    $path = storage_path_picture("pictures/categories") . date("m/d",$fileTime) . "/" . $file;
+    if(file_exists($path)){
+        return $path;
+    }
     return false;
 }
 function getFileNameFromUrl($file){

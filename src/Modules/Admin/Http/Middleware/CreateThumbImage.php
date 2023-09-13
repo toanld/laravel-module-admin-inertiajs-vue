@@ -29,6 +29,7 @@ class CreateThumbImage
             $fileName = getFileNameFromUrl($url);
             $pathThumb = storage_path_picture('thumb') . $with . "/" . $height . "/";
             if(!file_exists($pathThumb)) mkdir($pathThumb, 0777, true);
+
             $image = Image::make($pathSaveFile);
             // Lấy kích thước của ảnh gốc
             $originalWidth = $image->width();
@@ -44,7 +45,7 @@ class CreateThumbImage
                 $constraint->aspectRatio();
             });
             $image->resizeCanvas($with, $height, 'center', false, '#ffffff');
-            $backgroundColor = '#ffffff';
+            $backgroundColor = '#cccccc';
             $newImage = Image::canvas($with, $height, $backgroundColor);
             // Chèn ảnh gốc vào ảnh mới để tạo ảnh vuông với background màu trắng
             $newImage->insert($image, 'center');
