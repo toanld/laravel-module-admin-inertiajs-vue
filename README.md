@@ -13,6 +13,7 @@ php artisan install:admin
 ```
 ####sẽ hiển thị ra các package php và js cần cài thì cài đặt nó
 ```
+composer require barryvdh/laravel-debugbar --dev
 composer require nwidart/laravel-modules
 composer require ryannielson/meta
 composer require toanld/ziggy
