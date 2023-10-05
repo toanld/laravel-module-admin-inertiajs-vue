@@ -4,6 +4,7 @@ namespace Modules\Admin\Console;
 
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -47,7 +48,7 @@ class CreateUser extends Command
             'name' => $name,
             'email' => $email,
             'admin_type'=>1,
-            'password' => $password,
+            'password' => Hash::make($password),
         ]);
     }
 

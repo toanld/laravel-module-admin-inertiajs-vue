@@ -15,7 +15,16 @@ return [
             'name' => 'Danh mục bài viết',
             'route' => 'categoryposts',
         ],
+        '4' => [
+            'name' => 'demo',
+            'route' => 'demo',
+        ],
+        '5' => [
+            'name' => 'Cấu hình chung',
+            'route' => 'configurations',
+        ],
     ],
     'table_prefix' => 'admin_',
     'route_prefix' => 'admin',
+    'watermark' => env('WATERMARK','Anduoc.vn')
 ];

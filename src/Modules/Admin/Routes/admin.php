@@ -1,4 +1,6 @@
 <?php
+use Modules\Admin\Http\Controllers\ConfigController;
+
 use Modules\Admin\Http\Controllers\DemoController;
 
 use Modules\Admin\Http\Controllers\CategoryPostController;
@@ -33,3 +35,8 @@ Route::put('categoryposts/{model}/restore', [CategoryPostController::class, 'res
 Route::get('demo', [DemoController::class, 'create'])->name('demo')->middleware('auth');
 Route::get('demo/api', [DemoController::class, 'api'])->name('api.demo')->middleware('auth');
 Route::post('demo', [DemoController::class, 'store'])->name('demo.store')->middleware('auth');
+
+
+//ConfigController
+Route::get('configurations', [ConfigController::class, 'index'])->name('configurations')->middleware('auth');
+Route::post('configurations', [ConfigController::class, 'store'])->name('configurations.store')->middleware('auth');

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-
+import Fuse from 'fuse.js'
 export default {
   inheritAttrs: false,
   props: {
@@ -111,35 +111,35 @@ export default {
     setSelectionRange(start, end) {
       this.$refs.input.setSelectionRange(start, end)
     },
+    searchItem(keyword){
+        // Tạo một instance của Fuse với các tùy chọn tìm kiếm
+        const options = {
+            includeScore: true,
+            useExtendedSearch: true,
+            keys: ['name'], // Thuộc tính bạn muốn tìm kiếm
+        };
+        const fuse = new Fuse(this.options, options);
+
+        // Tìm kiếm gần đúng từ khóa
+        const results = fuse.search(keyword);
+        // Tạo một mảng mới chứa các bản ghi được tìm thấy
+        this.optionsTemp = results.map(result => result.item);
+        if(this.optionsTemp.length == 0){
+            this.optionsTemp = this.options;
+        }
+    },
     keyMonitor:function(event) {
-
-        if(this.api) {
-            /*
-            if(event.key == "ArrowDown"){
-                // Di chuyển lựa chọn xuống
-                if (this.selectedOptionIndex < this.optionsTemp.length - 1) {
-                    this.selectedOptionIndex++;
-                }
-            }
-            if(event.key == "ArrowUp"){
-                if (this.selectedOptionIndex > 0) {
-                    this.selectedOptionIndex--;
-                }
-            }
-            // Lấy lựa chọn được chọn và cập nhật giá trị input
-            if (this.selectedOptionIndex >= 0 && this.selectedOptionIndex < this.optionsTemp.length) {
-                const selectedOption = this.optionsTemp[this.selectedOptionIndex];
-                this.valueTemp = selectedOption.name;
+        if(this.options){
+            this.valueTemp = event.target.value;
+            this.searchItem(this.valueTemp);
+            if(event.target.value !== this.modelValue.name) {
                 this.$emit('update:modelValue', {
-                    id:selectedOption.id,
-                    name:selectedOption.name
+                    id:0,
+                    name:event.target.value
                 });
-            } else {
-                // Nếu không có lựa chọn nào, giữ nguyên giá trị input
-                this.valueTemp = event.target.value;
             }
-            //*/
-
+        }
+        if(this.api) {
             this.valueTemp = event.target.value;
             if(event.target.value !== this.modelValue.name) {
                 this.$emit('update:modelValue', {

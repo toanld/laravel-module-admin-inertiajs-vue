@@ -32,6 +32,15 @@ class Post extends Model
 
     public function getPictureAttribute()
     {
+            return $this->getPictureFileName();
+    }
+
+    public function getThumb($width,$height){
+        $fileName = $this->getPictureFileName();
+        return imageGetPathThumb($fileName,$width,$height);
+    }
+
+    public function getPictureFileName(){
         if(is_array($this->pictures)){
             $data = $this->pictures;
         }else {

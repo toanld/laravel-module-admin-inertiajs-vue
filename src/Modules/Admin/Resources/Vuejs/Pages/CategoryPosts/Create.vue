@@ -9,6 +9,8 @@
       <form @submit.prevent="store">
         <div class="flex flex-wrap -mr-6 p-4">
           <text-input label="Tiêu đề" v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2"  />
+            <text-input label="Kiểu Input textselectbox request options suggest" :options="listings" v-model="form.cat_id" :error="form.errors.cat_id" class="pb-1 pr-6 w-full"  />
+            <div>{{form.cat_id}}</div>
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Create new</loading-button>
@@ -39,25 +41,16 @@ export default {
   layout: Layout,
   props: {
       routeName:'categoryposts',
+      listings:[]
   },
   remember: 'form',
   data() {
     return {
-        selected:null,
-        options: [
-            { name: "Cat name", id: "cat" },
-            { name: "Dog", id: "dog" },
-            { name: "Elephant", id: "elephant" },
-            { name: "Girafe", id: "girafe" },
-            { name: "Snake", id: "snake" },
-            { name: "Spider", id: "spider" },
-            { name: "Unicorn", id: "unicorn" }
-        ],
         form: this.$inertia.form({
             name: '',
             cat_id:{
-                id:4,
-                name:'aaa'
+                id:0,
+                name:null
             }
           }),
     }
@@ -65,7 +58,6 @@ export default {
   methods: {
       validateSelection(selection) {
           this.form.cat_id = selection;
-          this.selected = selection;
           console.log(selection.name + " has been selected");
       },
       getDropdownValues(keyword) {

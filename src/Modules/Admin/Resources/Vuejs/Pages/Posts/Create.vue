@@ -9,8 +9,9 @@
       <form @submit.prevent="store">
           <file-input v-model:data="form.pictures"    />
           <text-input v-model="form.name" :error="form.errors.name" class="mb-4" label="Tiêu đề" />
+          <text-input label="Chọn danh mục" :options="categories" v-model="form.category" :error="form.errors.category" class="pb-4 pr-6 lg:w-1/2"  />
           <textarea-input v-model="form.teaser" :error="form.errors.teaser" class="pb-8 pr-6 w-full" label="Tóm tắt" />
-            
+
           <editor v-model="form.description" :error="form.errors.description" class="mb-4"></editor>
           <checkbox v-model="form.status" :error="form.errors.status" class="" label="Trạng thái"/>
           <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -46,13 +47,25 @@ export default {
   layout: Layout,
   props: {
       routeName:'posts',
+      categories:{}
   },
   remember: 'form',
   data() {
+
     return {
+        options:[
+            {id:1,name:'name 1'},
+            {id:2,name:'name 2'},
+            {id:3,name:'name 3'},
+            {id:4,name:'name 4'},
+            {id:5,name:'name 5'}
+        ],
         form: this.$inertia.form({
         name: '',
         teaser: '',
+        category:[
+            {id:0,name:'Chọn danh mục'},
+        ],
         pictures:[],
         description: null,
         status: true
