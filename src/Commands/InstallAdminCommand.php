@@ -66,6 +66,7 @@ class InstallAdminCommand extends Command
             $stubDir = __DIR__ . "/../Modules/Admin/Stubs";
             $this->copyDirectory($stubDir . "/public/assets/libs",base_path("public") . "/assets/libs");
             $this->copyStub($stubDir . "/HandleInertiaRequests.stub",base_path("app/Http/Middleware") . "/HandleInertiaRequests.php");
+            $this->copyStub($stubDir . "/TrustProxies.stub",base_path("app/Http/Middleware") . "/TrustProxies.php");
             $appConfig = file_get_contents(base_path() . "/app/Http/Kernel.php");
             if(strpos($appConfig,"HandleInertiaRequests::class") === false){
                 $appConfig = str_replace("'web' => [","'web' => [\n            \\App\\Http\\Middleware\\HandleInertiaRequests::class,\n",$appConfig);
