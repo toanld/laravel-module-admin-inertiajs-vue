@@ -22,6 +22,7 @@ class InstallAdminCommand extends Command
             "toanld/multi-relationships",
             "inertiajs/inertia-laravel",
             "kalnoy/nestedset",
+            "barryvdh/laravel-debugbar",
             "intervention/image"
 
         ];
