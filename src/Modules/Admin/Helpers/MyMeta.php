@@ -6,6 +6,7 @@
  * Time: 2:16 PM
  */
 
+use Detection\MobileDetect;
 use RyanNielson\Meta\Meta;
 
 class MyMeta extends Meta
@@ -18,10 +19,21 @@ class MyMeta extends Meta
     private $h1 = null;
     private $modbileDetect = null;
     private $statusCheckIp = null;
+    protected $currentLang = "vn";
     private $logs = [];
     protected $teaser;
     use \Modules\Admin\Helpers\SingletonTrait;
-
+    public function setCurrentLang($lang){
+        $this->currentLang = $lang;
+    }
+    public function getCurrentLangName(){
+        $arrLang = config('lang');
+        if(isset($arrLang[$this->currentLang])) return $arrLang[$this->currentLang];
+        return "Việt";
+    }
+    public function getCurrentLang(){
+        return $this->currentLang;
+    }
     function setLinkTag($arrAttr = [])
     {
         $attr = ' ';
@@ -43,7 +55,7 @@ class MyMeta extends Meta
     function isMobile()
     {
         if (is_null($this->modbileDetect)) {
-            $this->modbileDetect = new Mobile_Detect();
+            $this->modbileDetect = new MobileDetect();
         }
         return $this->modbileDetect->isMobile();
     }

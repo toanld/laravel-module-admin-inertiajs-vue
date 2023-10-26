@@ -126,7 +126,7 @@ onMounted(() => {
                 menubar: false,
                 plugins: "link,image,autoresize,code",
                 toolbar:
-                    'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    'undo redo | blocks fontfamily fontsize | bold italic underline | link image media table | align | gptButton',
                 image_title: true,
                 statusbar: false,
                 file_picker_types: 'image',
@@ -140,6 +140,57 @@ onMounted(() => {
                         let value = editor.getContent();
                         value = value.replace("../../storage/","/storage/");
                         emit('update:modelValue', value); // Emit the updated value
+                    });
+                    editor.ui.registry.addButton('gptButton', {
+                        text: 'Viết lại bằng GPT',
+                        tooltip: 'Bấm để viết lại nội dung bằng chatGPT',
+                        onAction: function () {
+                            if (editor) {
+                                axios.post(route('stream'), {
+                                    question: editor.getContent()
+                                })
+                                    .then(function (response) {
+                                        editor.focus();
+                                        editor.setContent("", {format : "raw"});
+                                        const source = new EventSource(route('stream'));
+                                        let valueStream = '';
+
+
+                                        source.addEventListener("update", function (event) {
+                                            if (event.data === "end") {
+                                                source.close();
+                                                return;
+                                            }
+                                            valueStream += event.data;
+                                            let str = event.data;
+                                            const lastChar = str[str.length - 1];
+                                            if(lastChar == '>'){
+                                                editor.setContent(valueStream, {format : "raw"}); // Đặt nội dung
+                                                editor.selection.select(editor.getBody(), true);
+                                                editor.selection.collapse(false);
+                                                var objDiv = document.getElementById(editorId+"_error");
+                                                objDiv.scrollTop = objDiv.scrollHeight;
+                                            }else {
+                                                editor.execCommand('mceInsertContent', false, event.data);
+                                            }
+                                            //console.log(valueStream);
+                                            emit('update:modelValue', valueStream); // Emit the updated value
+                                        });
+
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    }).done(function (response){
+                                        // Chèn nội dung "abc" vào trình soạn thảo
+                                        let value = editor.getContent();
+                                        emit('update:modelValue', value); // Emit the updated value
+                                    })
+
+                            }
+                            /*
+
+                            // */
+                        },
                     });
                 }
             });
@@ -177,7 +228,8 @@ const insertImage = (imageUrl) => {
             <div v-if="lastestImage.length" class="mb-2" style="overflow: hidden; height: 100px; display: flex">
                 <img  v-for="(item, index) in lastestImage" :src="item.thumb" @click="insertImage(item.thumb)" :alt="'Image ' + (index + 1)" width="100" height="100" class="cursor-pointer m-1 border-2 border-gray-300">
             </div>
+            <div id="toan_chien"></div>
             <textarea :id="editorId"  v-model="computedValue"></textarea>
-            <div v-if="error" class="form-error">{{ error }}</div>
+            <div v-if="error" :id="editorId+'_error'" class="form-error">{{ error }}</div>
         </div>
 </template>

@@ -12,7 +12,7 @@
           <text-input label="Chọn danh mục" :options="categories" v-model="form.category" :error="form.errors.category" class="pb-4 pr-6 lg:w-1/2"  />
           <textarea-input v-model="form.teaser" :error="form.errors.teaser" class="pb-8 pr-6 w-full" label="Tóm tắt" />
 
-          <editor v-model="form.description" :error="form.errors.description" class="mb-4"></editor>
+          <editor v-model="form.description" :error="form.errors.description" label_last_upload="Ảnh mới upload" class="mb-4"></editor>
           <checkbox v-model="form.status" :error="form.errors.status" class="" label="Trạng thái"/>
           <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
             <loading-button :loading="form.processing" class="btn-indigo" type="submit">Lưu bài viết</loading-button>

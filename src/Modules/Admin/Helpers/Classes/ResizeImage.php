@@ -3,10 +3,15 @@ namespace Modules\Admin\Helpers\Classes;
 use Intervention\Image\Facades\Image;
 
 class ResizeImage {
-    public function resize($fileName,$with,$height,$check_exists = false){
+    protected $pathSave = null;
+    public function setPathSave($path){
+        $this->pathSave = $path;
+    }
+    public function resize($fileName,$with,$height,$check_exists = false,$flip = null){
         $pathSaveFile = get_pictures_save_path($fileName,'uploads');
         if(!$pathSaveFile) return false;
         $pathThumb = storage_path_picture('thumb') . $with . "/" . $height . "/";
+        if(!empty($this->pathSave)) $pathThumb = $this->pathSave;
         if(!file_exists($pathThumb)) mkdir($pathThumb, 0777, true);
         if(file_exists($pathThumb . $fileName) && $check_exists) return true;
         $image = Image::make($pathSaveFile);
@@ -39,6 +44,10 @@ class ResizeImage {
                 $font->color(array(255, 255, 255, 0.5)); // Màu trắng, độ mờ 50%
             });
         }
+        if(!empty($flip)){
+            $newImage->flip($flip);
+        }
+        //dd($pathThumb . $fileName);
         $newImage->save($pathThumb . $fileName,100);
         return $newImage->response('jpg',100);
     }

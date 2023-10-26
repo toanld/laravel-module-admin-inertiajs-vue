@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# Chuyển đến thư mục chứa script
+cd $(dirname $0)
 # Prompt người dùng nhập phiên bản
 read -p "Nhập phiên bản: " version
 

@@ -11,6 +11,7 @@ use Modules\Admin\Console\CreateUser;
 use Modules\Admin\Console\GenerateDatabase;
 use Modules\Admin\Console\InstallFirst;
 use Modules\Admin\Console\VueCreatePage;
+use Modules\Admin\Entities\Configuration;
 use Modules\Admin\Http\Middleware\AdminAuthenticate;
 
 class AdminServiceProvider extends ServiceProvider
@@ -40,6 +41,7 @@ class AdminServiceProvider extends ServiceProvider
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
         $kernel->appendMiddlewareToGroup('superadmin', AdminAuthenticate::class);
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\CreateThumbImage');
+        $kernel->pushMiddleware('Modules\Admin\Http\Middleware\EditTranslate');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,
@@ -47,6 +49,19 @@ class AdminServiceProvider extends ServiceProvider
                 CreateUser::class
             ]);
         }
+        Config::set('db',Configuration::getConfig());
+        $meta = [
+            "title" => config('db.title'),
+            "description" => config('db.description'),
+            'og' => [
+                "title" => config('db.title'),
+                "description" => config('db.description'),
+            ]
+        ];
+        if(!empty(config('db.meta'))){
+            $meta = array_merge($meta,config('db.meta'));
+        }
+        meta()->set($meta);
         Validator::extend('my_number', function ($attribute, $value) {
 
             // This will only accept alpha and spaces.

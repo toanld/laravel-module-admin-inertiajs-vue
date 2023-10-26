@@ -273,6 +273,8 @@ class HtmlCleanUp
     protected function dowloadPic(){
         if($this->downloadPicture){
             foreach ($this->arrayPictures as $md5 => $url){
+                $url = str_replace("../","/",$url);
+                $url = str_replace("//","/",$url);
                 if(substr($url, 0,1)== "/" || strpos($url,config('app.url')) !== false){
                     $this->arrayPictures[$md5] = $url;
                 }elseif(substr($url, 0,4)== "http"){
@@ -290,6 +292,8 @@ class HtmlCleanUp
 
     public function downloadAndSaveImage($url)
     {
+        $urlNoneQuery = explode("?",$url);
+        $urlNoneQuery = $urlNoneQuery[0];
         $client = new Client();
 
         // Tải ảnh từ URL
@@ -301,7 +305,7 @@ class HtmlCleanUp
         // Tạo tên tệp theo định dạng mong muốn
         $fileTime = time();
         $pathTime = date("Y/m", $fileTime);
-        $extension = pathinfo($url, PATHINFO_EXTENSION);
+        $extension = pathinfo($urlNoneQuery, PATHINFO_EXTENSION);
         $fileName = $fileTime . '_' . Str::random(5) . '.' . $extension;
 
         // Lưu ảnh vào thư mục 'public/uploads/' với tên tệp được chỉ định

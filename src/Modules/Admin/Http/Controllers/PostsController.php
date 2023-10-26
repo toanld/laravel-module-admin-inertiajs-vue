@@ -50,7 +50,7 @@ class PostsController extends Controller
     {
         return Inertia::module('admin::Posts/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'posts' => ModelName::paginate(10),
+            'posts' => ModelName::orderBy('updated_at','DESC')->paginate(10),
         ]);
     }
 
@@ -142,7 +142,6 @@ class PostsController extends Controller
             'pictures' => ['array'],
             'status' => ['boolean'],
         ]);
-
         $slug = Str::slug($validate['name']);
         $md5 = md5($slug);
         $model->name = $validate['name'];

@@ -40,4 +40,13 @@ class Category extends Model
     {
         return \Modules\Admin\Database\factories\PostFactory::new();
     }
+    public function childrent() {
+        return $this->hasMany(Category::class,"parent_id","id");
+    }
+    public function getUrlAttribute(){
+        if($this->count()==0){
+            return 'not_url';
+        }
+        return route('category-blog',['id'=>$this->id,'slug'=>$this->slug]);
+    }
 }

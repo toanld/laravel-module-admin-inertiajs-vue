@@ -1,4 +1,13 @@
 <?php
+
+use Modules\Admin\Helpers\Constants;
+
+function isAdmin(){
+    if (auth()->check() && (auth()->user()->admin_type & Constants::USER_TYPE_SUPER_ADMIN) === Constants::USER_TYPE_SUPER_ADMIN) {
+        return true;
+    }
+    return false;
+}
 function imageGetPathThumb($fileName,$w,$h){
     return "/storage/uploads/thumb/" . $w . "/" . $h . "/" . $fileName;
 }
