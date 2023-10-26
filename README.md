@@ -8,11 +8,10 @@ composer require toanld/laravel-module-admin-inertiajs-vue
 
 ### Cài đặt module theo các bước
 
-```shell
-php artisan install:admin
-```
+
 ####sẽ hiển thị ra các package php và js cần cài thì cài đặt nó
 ```
+composer require barryvdh/laravel-debugbar --dev
 composer require nwidart/laravel-modules
 composer require ryannielson/meta
 composer require toanld/ziggy
@@ -40,6 +39,9 @@ npm -D install fuse.js
 npm -D install autoprefixer
 npm -D install @vitejs/plugin-vue
 npm -D install vue
+```
+```shell
+php artisan install:admin
 ```
 
 ### Tạo database
