@@ -1,6 +1,20 @@
 ## Installation
 
-Require this package with composer. It is recommended to only require the package for development.
+Introducing toanld/laravel-module-admin-inertiajs-vue
+Are you looking to separate your admin panel from your main application and leverage the power of Vue.js on the frontend with Laravel on the backend? Look no further! With toanld/laravel-module-admin-inertiajs-vue, you can have a fully-integrated admin module up and running in no time.
+
+### Key Benefits:
+Rapid Project Creation: toanld/laravel-module-admin-inertiajs-vue empowers you to create a standalone admin project without starting from scratch. Save time by eliminating the need to develop your admin interface from the ground up.
+
+Vue.js and Laravel Integration: We've seamlessly integrated Vue.js and Laravel, offering you the best of both development worlds. Use Laravel to manage data and Vue.js to display it smoothly.
+
+Inertia.js Integration: With Inertia.js support, toanld/laravel-module-admin-inertiajs-vue enables you to build a real-time admin interface without page reloads. Enhance user experiences and optimize application performance.
+
+Customization and Scalability: Designed for easy customization and extensibility, toanld/laravel-module-admin-inertiajs-vue allows you to tailor the admin interface to your project's specific needs. Modify the UI, add new features, and adjust it as required.
+
+If you're seeking a swift and efficient way to kickstart your Vue.js and Laravel admin interface, toanld/laravel-module-admin-inertiajs-vue is the top choice. Explore and experience its convenience and power today!
+
+Feel free to adapt and use this markdown introduction for your package. You can replace toanld/laravel-module-admin-inertiajs-vue with your package name, and further customize it to your liking.
 
 ```shell
 composer require toanld/laravel-module-admin-inertiajs-vue
