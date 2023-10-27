@@ -13,6 +13,8 @@ use Modules\Admin\Console\InstallFirst;
 use Modules\Admin\Console\VueCreatePage;
 use Modules\Admin\Entities\Configuration;
 use Modules\Admin\Http\Middleware\AdminAuthenticate;
+use Modules\Admin\Http\Middleware\CreateThumbImage;
+use Modules\Admin\Http\Middleware\EditTranslate;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
         $kernel->appendMiddlewareToGroup('superadmin', AdminAuthenticate::class);
+        $kernel->appendMiddlewareToGroup('web', EditTranslate::class);
+        $kernel->appendMiddlewareToGroup('web', CreateThumbImage::class);
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\CreateThumbImage');
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\EditTranslate');
         if ($this->app->runningInConsole()) {

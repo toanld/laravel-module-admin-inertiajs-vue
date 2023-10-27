@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
+
 class MyModule
 {
     use \Modules\Admin\Helpers\SingletonTrait;
@@ -57,7 +60,7 @@ class MyModule
 
         }
         foreach ($arrayMenu as $key => $row){
-            $row["link"] = route($row["route"]);
+            $row["link"] = Route::has($row["route"]) ? route($row["route"]) : $row["route"];
             $arrayMenu[$key] = $row;
         }
         return $arrayMenu;

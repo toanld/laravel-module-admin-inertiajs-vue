@@ -108,7 +108,7 @@
                 });
             });
             function showTranslateModal(id_edit){
-                $.get("{{myroute('translate.edit')}}?key="+id_edit, function(data, status){
+                $.get("{{myroute('translate.edit')}}?key="+id_edit+"&lang={{meta()->getCurrentLang()}}", function(data, status){
                     document.getElementById("translate_text_default").innerText = data.default || null;
                     document.getElementById("translate_text").value = data.text || null;
                     document.getElementById("translate_key").value = id_edit || null;

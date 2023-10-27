@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Modules\Admin\Helpers\Constants;
 
 function isAdmin(){
@@ -20,8 +21,10 @@ function myroute($routeName,$param = []){
     if($routeName == "static" && isset($param["slug"])){
         myweb()->setStaticSlug($param["slug"]);
     }
-
-    return route($routeName,$param);
+    if(Route::has($routeName)){
+        return route($routeName,$param);
+    }
+    return "/?error=router";
 }
 
 function storage_path_picture($type = 'products'){

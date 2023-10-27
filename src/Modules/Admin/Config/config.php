@@ -72,6 +72,10 @@ return [
         "openai_gpt_model" => [
             "label" => "Model API ChatGPT",
             "value" => "gpt-3.5-turbo"
+        ],
+        "secret_post_api" => [
+            "label" => "Secret cho phép đăng bài qua API",
+            "value" => ""
         ]
 
     ]

@@ -18,6 +18,13 @@ class PostsController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
         $teaser = $request->input('intro');
+        $secret = $request->input('secret');
+        if($secret != config('db.secret_post_api')){
+            return [
+                "success" => false,
+                "post_id" => "Error secret"
+            ];
+        }
         $slug = Str::slug($title);
         $md5 = md5($slug);
         $model = new ModelName();
