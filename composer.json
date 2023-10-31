@@ -18,5 +18,23 @@
             "name": "toanld",
             "email": "toanld1905@gmail.com"
         }
-    ]
+    ],
+    "require": {
+        "nwidart/laravel-modules": "^10.0",
+        "ryannielson/meta": "^1.1",
+        "toanld/ziggy": "^1.8",
+        "toanld/laravel-debug-to-sql": "^1.1",
+        "toanld/modules-inertia": "^1.2",
+        "toanld/multi-relationships": "^1.1",
+        "inertiajs/inertia-laravel": "^0.6.11",
+        "kalnoy/nestedset": "^6.0",
+        "intervention/image": "^2.7",
+        "openai-php/client": "^0.7.4",
+        "symfony/http-client": "^6.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }
