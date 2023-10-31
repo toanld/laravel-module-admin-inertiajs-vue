@@ -24,6 +24,7 @@ window.resizeBase64Img = resizeBase64Img;
 window.MyForm = MyForm;
 window.translateFormData = new FormData();
 window.myTrans = myTrans;
+window.NProgress = NProgress;
 window.axios = axios;
 const token = document.head.querySelector('meta[name="csrf-token"]');
 if (token) {

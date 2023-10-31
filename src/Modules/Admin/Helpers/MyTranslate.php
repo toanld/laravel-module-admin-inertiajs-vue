@@ -6,8 +6,8 @@
  * Time: 3:25 PM
  */
 
-use App\Traits\SingletonTrait;
 use Illuminate\Support\Facades\Cache;
+use Modules\Admin\Helpers\SingletonTrait;
 
 class MyTranslate
 {

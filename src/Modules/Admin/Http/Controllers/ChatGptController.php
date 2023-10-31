@@ -19,7 +19,6 @@ class ChatGptController extends Controller
         $client = OpenAI::client($api_key);
         $value = trim(removeHTML(convertToUnicode(session()->get('gptQuestion'))));
         session()->forget('gptQuestion');
-
         return response()->stream(function () use ($client,$value) {
             if(empty($value)){
                 echo "event: update\n";

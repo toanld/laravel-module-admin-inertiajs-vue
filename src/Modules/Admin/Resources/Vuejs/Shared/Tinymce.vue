@@ -158,8 +158,12 @@ onMounted(() => {
 
                                         source.addEventListener("update", function (event) {
                                             if (event.data === "end") {
+                                                NProgress.done();
                                                 source.close();
                                                 return;
+                                            }
+                                            if(valueStream == ''){
+                                                NProgress.start();
                                             }
                                             valueStream += event.data;
                                             let str = event.data;
@@ -176,15 +180,12 @@ onMounted(() => {
                                             //console.log(valueStream);
                                             emit('update:modelValue', valueStream); // Emit the updated value
                                         });
-
-                                    })
-                                    .catch(function (error) {
-                                        console.log(error);
-                                    }).done(function (response){
-                                        // Chèn nội dung "abc" vào trình soạn thảo
                                         let value = editor.getContent();
+
                                         emit('update:modelValue', value); // Emit the updated value
+                                        NProgress.done();
                                     })
+
 
                             }
                             /*

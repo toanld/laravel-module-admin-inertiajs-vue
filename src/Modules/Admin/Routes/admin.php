@@ -9,6 +9,7 @@ use Modules\Admin\Http\Controllers\CategoryPostController;
 
 // Posts
 use Modules\Admin\Http\Controllers\PostsController;
+use Modules\Admin\Http\Controllers\StaticController;
 use Modules\Admin\Http\Controllers\TranslateController;
 
 Route::get('posts', [PostsController::class, 'index'])->name('posts')->middleware('auth');
@@ -48,4 +49,12 @@ Route::post('demo', [DemoController::class, 'store'])->name('demo.store')->middl
 //ConfigController
 Route::get('configurations', [ConfigController::class, 'index'])->name('configurations')->middleware('auth');
 Route::post('configurations', [ConfigController::class, 'store'])->name('configurations.store')->middleware('auth');
+
+Route::get('statics', [StaticController::class, 'index'])->name('statics')->middleware('auth');
+Route::get('statics/create', [StaticController::class, 'create'])->name('statics.create')->middleware('auth');
+Route::post('statics', [StaticController::class, 'store'])->name('statics.store')->middleware('auth');
+Route::get('statics/{model}/edit', [StaticController::class, 'edit'])->name('statics.edit')->middleware('auth');
+Route::put('statics/{model}', [StaticController::class, 'update'])->name('statics.update')->middleware('auth');
+Route::delete('statics/{model}', [StaticController::class, 'destroy'])->name('statics.destroy')->middleware('auth');
+Route::put('statics/{model}/restore', [StaticController::class, 'restore'])->name('statics.restore')->middleware('auth');
 

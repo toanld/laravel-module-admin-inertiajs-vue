@@ -22,6 +22,10 @@ return [
         '6' => [
             'name' => 'Dịch web',
             'route' => 'translates',
+        ],
+        '6' => [
+            'name' => 'Trang tĩnh',
+            'route' => 'statics',
         ]
     ],
     'table_prefix' => 'admin_',

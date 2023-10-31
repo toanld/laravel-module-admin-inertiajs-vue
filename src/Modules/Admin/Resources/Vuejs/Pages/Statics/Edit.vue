@@ -9,12 +9,16 @@
     <div class="rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
           <div class="flex flex-wrap -mr-6 p-4">
-              <text-input label="Tiêu đề" v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2"  />
-              <textarea-input label="Mô tả" v-model="form.description" :error="form.errors.description" class="pb-8 pr-6 w-full"  />
+              <a :href="route('static',form.slug)" target="_blank">{{route('static',form.slug)}}</a>
+          </div>
+          <div class="flex flex-wrap -mr-6 p-4">
+              <text-input v-model="form.name" :error="form.errors.name" class="pb-8 pr-6 w-full lg:w-1/2" label="Tiêu đề" />
+          </div>
+          <div class="flex flex-wrap -mb-8 -mr-12 p-4">
+              <Tinymce v-model="form.description" :error="form.errors.description"></Tinymce>
           </div>
           <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
-              <button v-if="!model.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Xóa bài viết</button>
-              <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Lưu chỉnh sửa</loading-button>
+              <loading-button :loading="form.processing" class="btn-indigo" type="submit">Create new</loading-button>
           </div>
       </form>
     </div>
@@ -29,6 +33,7 @@ import SelectInput from '@admin/Shared/SelectInput.vue'
 import LoadingButton from '@admin/Shared/LoadingButton.vue'
 import TrashedMessage from '@admin/Shared/TrashedMessage.vue'
 import TextareaInput from '@admin/Shared/TextareaInput.vue'
+import Tinymce from '@admin/Shared/Tinymce.vue'
 
 export default {
   components: {
@@ -39,19 +44,17 @@ export default {
     TextareaInput,
     TextInput,
     TrashedMessage,
+      Tinymce
   },
   layout: Layout,
   props: {
-    routeName:'categoryposts',
+    routeName:'statics',
     model: Object
   },
   remember: 'form',
   data() {
     return {
-      form: this.$inertia.form({
-          description:this.model.description,
-        name: this.model.name
-      }),
+      form: this.$inertia.form(this.model),
     }
   },
   methods: {

@@ -29,8 +29,22 @@ class Configuration extends Model
         if(app()->runningInConsole()) {
             // we are running in the console
             $argv = \Request::server('argv', null);
-            if(isset($argv[1]) && strpos($argv[0],'artisan') !== false && strpos($argv[1],'migrate') !== false) {
+            $arrayIgnore = [
+                "migrate",
+                "vendor:",
+                "publish",
+                "package:",
+                "module:",
+                "optimize:",
+                "make:",
+            ];
+            if(!isset($argv[1]) && strpos($argv[0],'artisan') !== false) {
                 return [];
+            }
+            foreach ($arrayIgnore as $check){
+                if(isset($argv[1]) && strpos($argv[0],'artisan') !== false && strpos($argv[1],$check) !== false) {
+                    return [];
+                }
             }
         }
         $db = self::all();

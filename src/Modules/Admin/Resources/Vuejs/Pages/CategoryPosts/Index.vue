@@ -15,8 +15,8 @@
         <span class="hidden md:inline">Thêm mới</span>
       </Link>
     </div>
-    <div class="bg-white rounded-md shadow overflow-x-auto">
-      <table class="w-full whitespace-nowrap">
+    <div class="bg-white rounded-md shadow">
+      <table class="w-full bg-white">
         <tr class="text-left font-bold">
           <th class="pb-4 pt-6 px-6">ID</th>
           <th class="pb-4 pt-6 px-6">Name</th>

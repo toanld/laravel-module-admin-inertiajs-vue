@@ -21,6 +21,7 @@ class InstallAdminCommand extends Command
             "toanld/modules-inertia",
             "toanld/multi-relationships",
             "inertiajs/inertia-laravel",
+            "openai-php/client",
             "kalnoy/nestedset",
             "barryvdh/laravel-debugbar",
             "intervention/image"

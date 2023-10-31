@@ -92,6 +92,7 @@ class CategoryPostController extends Controller
             $model->level = intval($cat->level) + 1;
         }
         $model->name = $validate['name'];
+        $model->description = $request->input('description');
         $model->slug = $slug;
         $model->md5 = $md5;
         $model->save();
@@ -110,12 +111,13 @@ class CategoryPostController extends Controller
         ]);
     }
 
-    public function update( ModelName $model)
+    public function update( ModelName $model,\Illuminate\Http\Request $request)
     {
         $validate = Request::validate([
             'name' => ['required', 'max:255']
         ]);
         $model->name = $validate['name'];
+        $model->description = $request->input('description');
         $model->save();
         return Redirect::route('categoryposts')->with('success', 'Data updated.');
     }
