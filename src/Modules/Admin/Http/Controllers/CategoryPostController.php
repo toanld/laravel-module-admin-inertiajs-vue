@@ -43,7 +43,20 @@ class CategoryPostController extends Controller
         return Inertia::module('admin::CategoryPosts/Index', [
             'filters' => Request::all('search', 'trashed'),
             'listings' => $listings,
+            'type_show' => ModelName::typeShow(),
         ]);
+    }
+
+    public function checked(\Illuminate\Http\Request $request){
+        $id = $request->input('id');
+        $show = array_sum((array)$request->input('selected'));
+        if($m = ModelName::find($id)){
+            $m->show = $show;
+            $m->save();
+        }
+        return [
+            "message" => "Lưu thành công"
+        ];
     }
 
     public function apiSearch(){

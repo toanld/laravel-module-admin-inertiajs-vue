@@ -209,7 +209,7 @@ export default {
         max-width: 248px;
         border: 1px solid #e7ecf5;
         box-shadow: 0px -8px 34px 0px rgba(0,0,0,0.05);
-        z-index: 1;
+        z-index: 100000;
         .dropdown-item {
             color: black;
             font-size: .7em;

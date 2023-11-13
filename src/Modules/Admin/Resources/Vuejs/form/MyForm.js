@@ -8,12 +8,13 @@ export class MyForm {
      */
     constructor(data) {
         this.originalData = data;
-
         for (let field in data) {
             this[field] = data[field];
         }
-
-        this.errors = new Errors();
+        this.myerrors = new Errors();
+        this.errors = {};
+        this.message = null;
+        this.type = null;
     }
 
 
@@ -38,8 +39,7 @@ export class MyForm {
         for (let field in this.originalData) {
             this[field] = '';
         }
-
-        this.errors.clear();
+        this.myerrors.clear();
     }
 
 
@@ -120,7 +120,10 @@ export class MyForm {
      * @param {object} data
      */
     onSuccess(data) {
-       console.log(data.message);
+        if(data.message){
+            this.message = data.message;
+            this.type = 'success';
+        }
         this.reset();
     }
 
@@ -131,6 +134,29 @@ export class MyForm {
      * @param {object} errors
      */
     onFail(errors) {
-        this.errors.record(errors);
+        if(errors.response.data.message){
+            this.message = errors.response.data.message;
+            this.type = 'error';
+        }
+        this.myerrors.record(errors);
+        for (let field in errors.response.data.errors) {
+            if(this.myerrors.has(field)){
+                this.errors[field] = this.myerrors.get(field);
+            }
+        }
     }
 }
+// HOW TO USE IN VUE COMPONENT:
+// data : {
+// 	form : new MyForm({
+// 		name        : '',
+// 		description : '',
+// 	}),
+// },
+
+// methods : {
+// 	onSubmit() {
+// 		this.form.post('/projects')
+// 			.then(response => alert('Wahoo!'));
+// 	}
+// }

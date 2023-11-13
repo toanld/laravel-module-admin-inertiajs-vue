@@ -55,7 +55,7 @@ php artisan admin:create-user
 php artisan make:admin-page
 ```
 
-### tạo content blog tạm thời
+### Tạo dữ liệu bài viết mẫu để code
 ```shell
 php artisan post:example
 ```

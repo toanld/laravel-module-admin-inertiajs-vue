@@ -33,6 +33,7 @@ Route::post('translates', [TranslateController::class, 'store'])->name('translat
 Route::get('categoryposts', [CategoryPostController::class, 'index'])->name('categoryposts')->middleware('auth');
 Route::get('categoryposts/create', [CategoryPostController::class, 'create'])->name('categoryposts.create')->middleware('auth');
 Route::post('categoryposts', [CategoryPostController::class, 'store'])->name('categoryposts.store')->middleware('auth');
+Route::post('categoryposts/checked', [CategoryPostController::class, 'checked'])->name('categoryposts.checked')->middleware('auth');
 Route::get('categoryposts/{model}/edit', [CategoryPostController::class, 'edit'])->name('categoryposts.edit')->middleware('auth');
 Route::put('categoryposts/{model}', [CategoryPostController::class, 'update'])->name('categoryposts.update')->middleware('auth');
 Route::delete('categoryposts/{model}', [CategoryPostController::class, 'destroy'])->name('categoryposts.destroy')->middleware('auth');

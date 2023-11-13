@@ -5,6 +5,7 @@ namespace Modules\Admin\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Kalnoy\Nestedset\NodeTrait;
+use Modules\Admin\Helpers\Casts\CastDateDiffForHumans;
 use Toanld\DebugToSql\DebugToSQL;
 
 class Category extends Model
@@ -14,6 +15,9 @@ class Category extends Model
     use NodeTrait;
 
     protected $fillable = [];
+    protected $casts = [
+        'updated_at' => CastDateDiffForHumans::class
+    ];
 
     public function __construct(array $attributes = [])
     {
@@ -40,6 +44,12 @@ class Category extends Model
     {
         return \Modules\Admin\Database\factories\PostFactory::new();
     }
+    public static function typeShow(){
+        return [
+            1 => "Show Home",
+            2 => 'Show Hot'
+        ];
+    }
     public function childrent() {
         return $this->hasMany(Category::class,"parent_id","id");
     }
@@ -47,6 +57,6 @@ class Category extends Model
         if($this->count()==0){
             return 'not_url';
         }
-        return route('category-blog',['id'=>$this->id,'slug'=>$this->slug]);
+        return myroute('category-blog',['id'=>$this->id,'slug'=>$this->slug]);
     }
 }

@@ -80,6 +80,10 @@ return [
         "secret_post_api" => [
             "label" => "Secret cho phép đăng bài qua API",
             "value" => ""
+        ],
+        "bg_crop_image" => [
+            "label" => "Màu nền ảnh thumb",
+            "value" => "#ffffff"
         ]
 
     ]

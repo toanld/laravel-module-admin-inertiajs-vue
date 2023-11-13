@@ -5,19 +5,23 @@ namespace Modules\Admin\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Admin\Helpers\Casts\CastBlogPicture;
+use Modules\Admin\Helpers\Casts\CastDateDiffForHumans;
 use Modules\Admin\Helpers\Casts\CastPicture;
 use Modules\Admin\Helpers\Casts\HtmlClean;
 use Toanld\DebugToSql\DebugToSQL;
+use Toanld\Relationship\MultiRelationships;
 
 class Post extends Model
 {
     use HasFactory;
     use DebugToSQL;
+    use MultiRelationships;
 
     protected $fillable = [];
     protected $casts = [
         'description' => HtmlClean::class,
-        'pictures'  => CastBlogPicture::class
+        'pictures'  => CastBlogPicture::class,
+        'updated_at' => CastDateDiffForHumans::class,
     ];
 
     public function __construct(array $attributes = [])
@@ -31,6 +35,10 @@ class Post extends Model
         return \Modules\Admin\Database\factories\PostFactory::new();
     }
 
+    public function category(){
+        //list_cat can be json ids (example: [2,3,43,23]) or string list ids (example: 2,3,43,23)
+        return $this->hasOne(Category::class,'id',['cat_4','cat_3','cat_2','cat_1']);
+    }
 
     public function getPictureAttribute()
     {
@@ -38,7 +46,7 @@ class Post extends Model
     }
     public function getImgAttribute()
     {
-        $img = '/storage/uploads/thumb/600/400';
+        $img = '/storage/thumb/600/400';
         return $img;
     }
 

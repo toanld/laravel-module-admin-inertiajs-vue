@@ -24,12 +24,12 @@ class ResizeImage {
         $bottom = $this->getBgPosition($image,'bottom',$originalWidth,$originalHeight);
         $newWidth = $originalWidth - $left - $right;
         $newHeight = $originalHeight - $top - $bottom;
-        $image->crop($newWidth+10, $newHeight+10, $left-5,$top-5);
+        $image->crop($newWidth, $newHeight, 0,0);
         $image->resize($with, $height, function ($constraint) {
             $constraint->aspectRatio();
         });
-        $image->resizeCanvas($with, $height, 'center', false, '#ffffff');
-        $backgroundColor = '#cccccc';
+        $image->resizeCanvas($with, $height, 'center', false, config("db.bg_crop_image",'#ffffff'));
+        $backgroundColor = '#ffffff';
         $newImage = Image::canvas($with, $height, $backgroundColor);
         // Chèn ảnh gốc vào ảnh mới để tạo ảnh vuông với background màu trắng
         $newImage->insert($image, 'center');

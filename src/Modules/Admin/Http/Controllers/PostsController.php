@@ -57,7 +57,7 @@ class PostsController extends Controller
     {
         return Inertia::module('admin::Posts/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'posts' => ModelName::orderBy('updated_at','DESC')->paginate(10),
+            'posts' => ModelName::orderBy('updated_at','DESC')->paginate(30),
         ]);
     }
 
@@ -74,7 +74,7 @@ class PostsController extends Controller
                         $category->name = "$category->name";
                     }
                     if($category->level != $level) {
-                        ModelName::where('id',$category->id)->update([
+                        Category::where('id',$category->id)->update([
                             "level" => $level
                         ]);
                     }

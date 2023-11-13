@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factory;
 use Modules\Admin\Console\CreateUser;
 use Modules\Admin\Console\GenerateDatabase;
 use Modules\Admin\Console\InstallFirst;
+use Modules\Admin\Console\SeedExampleDb;
 use Modules\Admin\Console\VueCreatePage;
 use Modules\Admin\Entities\Configuration;
 use Modules\Admin\Http\Middleware\AdminAuthenticate;
@@ -46,11 +47,12 @@ class AdminServiceProvider extends ServiceProvider
         $kernel->appendMiddlewareToGroup('web', CreateThumbImage::class);
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\CreateThumbImage');
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\EditTranslate');
-        if ($this->app->runningInConsole()) {
+        if (app()->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,
                 GenerateDatabase::class,
-                CreateUser::class
+                CreateUser::class,
+                SeedExampleDb::class
             ]);
         }
         Config::set('db',Configuration::getConfig());

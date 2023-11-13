@@ -21,7 +21,6 @@ class Errors {
      * Determine if we have any errors.
      */
     any() {
-        console.log(this.errors);
         return Object.keys(this.errors).length > 0;
     }
 
@@ -32,7 +31,6 @@ class Errors {
      * @param {string} field
      */
     get(field) {
-        console.log(this.errors[field]);
         if (this.errors[field]) {
             return this.errors[field][0];
         }
@@ -45,8 +43,7 @@ class Errors {
      * @param {object} errors
      */
     record(errors) {
-        this.errors = errors;
-        console.log(this.errors);
+        this.errors = errors.response.data.errors;
     }
 
 
@@ -58,7 +55,6 @@ class Errors {
     clear(field) {
         if (field) {
             delete this.errors[field];
-
             return;
         }
 
