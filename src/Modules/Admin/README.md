@@ -60,4 +60,21 @@ php artisan make:admin-page
 php artisan post:example
 ```
 
+### Thêm cấu hình configuration trong datatabase thì thêm vào file config.php của module biến db_configs như ví dụ dưới đây
+```
+return [
+    'name' => 'Web',
+    'db_configs' => [
+        "app" => [
+            "label" => "Thông tin ứng dụng",
+            'type' => 'json',
+            "value" => [
+                "android" => 'https://play.google.com/store/apps/details?id=scandict.com',
+                "ios"   => 'https://apps.apple.com/vn/app/toeic-max-luy%E1%BB%87n-thi-toeic/id6450526000'
+            ]
+        ]
+    ]
+];
+```
+
 

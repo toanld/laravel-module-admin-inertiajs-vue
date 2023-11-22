@@ -51,7 +51,7 @@ class ConfigController extends Controller
                 }else{
                     $value["value"] = $data[$key]["value"];
                 }
-                $value["type"] = $data[$key]["type"];
+                if(!isset($value["type"])) $value["type"] = $data[$key]["type"];
             }
             if(is_array($value["value"])){
                 $value["value"] = json_encode($value["value"],JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
