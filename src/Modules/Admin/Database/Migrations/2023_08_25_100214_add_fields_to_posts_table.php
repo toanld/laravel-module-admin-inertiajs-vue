@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('blog_posts', function (Blueprint $table) {
             $table->tinyInteger('status')->after('use_id')->default(0);
         });
     }
