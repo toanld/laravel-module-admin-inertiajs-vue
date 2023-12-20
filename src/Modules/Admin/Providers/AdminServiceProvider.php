@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factory;
 use Modules\Admin\Console\CreateUser;
 use Modules\Admin\Console\GenerateDatabase;
 use Modules\Admin\Console\InstallFirst;
-use Modules\Admin\Console\SeedExampleDb;
 use Modules\Admin\Console\VueCreatePage;
 use Modules\Admin\Entities\Configuration;
 use Modules\Admin\Http\Middleware\AdminAuthenticate;
@@ -47,22 +46,19 @@ class AdminServiceProvider extends ServiceProvider
         $kernel->appendMiddlewareToGroup('web', CreateThumbImage::class);
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\CreateThumbImage');
         $kernel->pushMiddleware('Modules\Admin\Http\Middleware\EditTranslate');
-        if (app()->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->commands([
                 VueCreatePage::class,
                 GenerateDatabase::class,
-                CreateUser::class,
-                SeedExampleDb::class
+                CreateUser::class
             ]);
         }
         Config::set('db',Configuration::getConfig());
         $meta = [
             "title" => config('db.title'),
             "description" => config('db.description'),
-            'og' => [
-                "title" => config('db.title'),
-                "description" => config('db.description'),
-            ]
+            "og:title" => config('db.title'),
+            "og:description" => config('db.title')
         ];
         if(!empty(config('db.meta'))){
             $meta = array_merge($meta,config('db.meta'));
@@ -75,12 +71,21 @@ class AdminServiceProvider extends ServiceProvider
             return preg_match('/^[0-9\.\,]+$/u', $value);
 
         });
-        if(App::isLocal()){
+        if(App::isLocal()) {
             $adminMenu = config('admin.menu');
-            $adminMenu[]=[
-                'name' => 'demo',
-                'route' => 'demo',
-            ];
+            $showDemo = true;
+            foreach ($adminMenu as $key => $val) {
+                if (isset($val["name"]) && $val["name"] == "demo") {
+                    $showDemo = false;
+                    break;
+                }
+            }
+            if ($showDemo){
+                    $adminMenu[] = [
+                        'name' => 'demo',
+                        'route' => 'demo',
+                    ];
+            }
             Config::set('admin.menu',$adminMenu);
         }
     }
