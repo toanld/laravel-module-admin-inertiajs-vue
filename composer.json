@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "nwidart/laravel-modules": "^10.0",
+        "nwidart/laravel-modules": "^11.0",
         "ryannielson/meta": "^1.1",
         "toanld/ziggy": "^1.8",
         "toanld/laravel-debug-to-sql": "^1.1",
